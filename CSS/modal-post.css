@@ -1,0 +1,429 @@
+/* ==============================
+   新規投稿モーダル専用スタイル (modal-post.css)
+============================== */
+
+/* --- 1. ヘッダー --- */
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-bottom: 1px solid #eee;
+    position: relative;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+    /* タイトルを中央に配置するための調整 */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.modal-header .material-icons {
+    cursor: pointer;
+    color: #555;
+    padding: 4px; /* クリック領域を確保 */
+    z-index: 10; /* タイトルの上に来るように */
+}
+
+/* --- 2. モーダルボディ --- */
+.modal-body {
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px; /* 各要素間の余白 */
+}
+
+.modal-step-title {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    text-align: center;
+    color: #333;
+}
+
+/* --- 3. ステップ1：メモの種類選択 --- */
+.post-type-options-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.post-type-options-vertical label {
+    display: flex;
+    align-items: center;
+    padding: 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.post-type-options-vertical label:hover {
+    background-color: #f9f9f9;
+}
+
+/* デフォルトのラジオボタンは非表示に */
+.post-type-options-vertical input[type="radio"] {
+    display: none;
+}
+
+/* 選択されたラジオボタンのテキストを太字に */
+.post-type-options-vertical input[type="radio"]:checked + span {
+    font-weight: bold;
+    color: #333;
+}
+
+.post-type-options-vertical label > span:first-of-type {
+    flex-grow: 1; /* テキスト部分が幅を広げる */
+}
+
+.info-icon {
+    color: #aaa;
+    transition: color 0.2s;
+}
+
+/* --- 4. ステップ2：内容入力フォーム --- */
+.selected-factor-display {
+    text-align: center;
+    padding: 8px;
+    background-color: #f0f2f5;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#factorTitle,
+#factorContent,
+#factorHashtagInput {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: "Zen Maru Gothic", sans-serif;
+    font-size: 14px;
+    box-sizing: border-box; /* paddingを含めて幅100%にする */
+    transition: border-color 0.2s;
+}
+
+#factorTitle:focus,
+#factorContent:focus,
+#factorHashtagInput:focus {
+    outline: none;
+    border-color: #333;
+}
+
+/* modal-post.css に追加 */
+#factorContent {
+    /* 枠線を追加 */
+    border: 1px solid #ddd; /* 薄いグレーの1pxの枠線 */
+    border-radius: 8px; /* 角を少し丸くする */
+    
+    outline: none; /* フォーカス時の青い枠線は維持 */
+    box-shadow: none; /* 影はなし */
+    padding: 10px 12px; /* 内側の余白を少し増やす */
+    font-size: 16px;
+    min-height: 150px;
+    resize: vertical; /* ユーザーが縦方向にリサイズできるようにする */
+
+    /* フォーカス時のスタイル (オプション) */
+    transition: border-color 0.2s ease-in-out; /* ホバー・フォーカス時のアニメーション */
+}
+
+/* フォーカス時の枠線の色を変更 (オプション) */
+#factorContent:focus {
+    border-color: #007bff; /* フォーカス時に青色にするなど */
+}
+/* ハッシュタグ */
+.multi-hashtag-container {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 5px;
+}
+.hashtag-tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding-bottom: 5px;
+}
+#factorHashtagInput {
+    border: none;
+    padding: 5px;
+}
+
+/* 対象銘柄 */
+.factor-target-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+}
+.target-name { font-weight: bold; }
+
+/* 影響期間 */
+.period-toggle-container label {
+    cursor: pointer;
+}
+.period-setting-container {
+    border-top: 1px solid #eee;
+    padding-top: 16px;
+}
+.period-inputs {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.period-inputs input[type="date"] {
+    width: 45%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* --- 5. フッターとボタン --- */
+.modal-footer {
+    padding: 16px;
+    border-top: 1px solid #eee;
+    display: flex;
+}
+
+.modal-btn {
+    flex-grow: 1; /* ボタンをフッター幅全体に広げる */
+    padding: 12px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.modal-btn:hover {
+    background-color: #555;
+}
+
+.select-target-button {
+    flex-grow: 0; /* 幅を広げない */
+    font-size: 14px;
+    padding: 8px 16px;
+}
+
+
+
+/* ==============================
+   銘柄検索モーダル内のスタイル
+============================== */
+
+/* --- 検索ボックス --- */
+.search-box-container {
+    display: flex;
+    align-items: center;
+    background-color: #f0f2f5; /* 薄いグレーの背景 */
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 16px; /* 検索結果との間に余白を設ける */
+}
+
+.search-box-container .material-icons {
+    color: #888;
+    margin-right: 8px;
+}
+
+.search-box-container input[type="search"] {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    font-family: "Zen Maru Gothic", sans-serif;
+    outline: none;
+    color: #333; /* 入力文字の色を定義 */
+}
+
+.search-box-container input[type="search"]::placeholder {
+    color: #aaa;
+}
+
+/* --- 検索結果リスト --- */
+.stock-search-results {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* --- 検索結果の各項目 --- */
+.result-item.stock-item {
+    padding: 14px 8px; /* 上下の余白を確保 */
+    border-bottom: 1px solid #f0f0f0; /* 項目ごとの薄い区切り線 */
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.result-item.stock-item:last-child {
+    border-bottom: none; /* 最後の項目の区切り線は非表示に */
+}
+
+.result-item.stock-item:hover {
+    background-color: #f9f9f9; /* マウスを乗せたときに背景色を変更 */
+}
+
+/* --- 項目内のテキスト --- */
+.item-content .item-title {
+    margin: 0 0 4px 0;
+    font-weight: bold;
+    color: #333; /* 文字色を濃くして視認性を向上 */
+    font-size: 14px;
+}
+
+.item-content .item-snippet {
+    margin: 0;
+    color: #666; /* 詳細テキストの文字色 */
+    font-size: 12px;
+}
+
+
+/* modal-post.css の末尾などに追記 */
+
+/* modal-post.css に追記 */
+
+.image-preview-container {
+    margin-top: 15px;
+    border: 1px dashed #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    min-height: 80px; /* プレビューエリアの最小高さを確保 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden; /* 画像がはみ出さないように */
+}
+
+.post-image-preview {
+    max-width: 100%;
+    max-height: 150px; /* プレビュー画像の最大高さ */
+    display: block;
+    border-radius: 4px;
+}
+
+.remove-image-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0;
+    line-height: 1; /* アイコンの縦位置調整 */
+}
+
+.remove-image-button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* ファイル入力フィールドの見た目を調整することもできます */
+.form-control-file {
+    display: block;
+    width: 100%;
+    padding: 8px 0; /* 上下のパディングで間隔を調整 */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+
+.form-control-file:hover {
+    background-color: #eee;
+}
+
+
+
+/* modal-post.css にこのスタイルを追加してください */
+
+/* 全体を囲むエディタコンテナのスタイル */
+.post-editor-container {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 8px 12px;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s ease-in-out;
+}
+
+/* フォーカス時のコンテナの枠線 */
+.post-editor-container:focus-within {
+    border-color: #007bff;
+}
+
+/* タイトル入力欄のスタイル */
+.post-editor-title {
+    font-size: 18px;
+    font-weight: bold;
+    min-height: 24px;
+    padding: 2px 0;
+    outline: none;
+    margin-bottom: 4px;
+}
+
+/* 内容入力欄のスタイル */
+.post-editor-content {
+    font-size: 16px;
+    min-height: 100px;
+    padding: 2px 0;
+    outline: none;
+    flex-grow: 1;
+}
+
+/* contenteditable のプレースホルダー表示 */
+[contenteditable]:empty:before {
+    content: attr(placeholder);
+    display: block;
+    color: #888;
+    cursor: text;
+}
+.post-editor-title[contenteditable]:empty:before {
+    font-weight: bold;
+}
+
+
+
+/* modal-post.css の末尾あたりに追記 */
+
+/* 対象銘柄エリアのスタイル */
+.factor-target-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    background-color: #f0f2f5; /* 背景色を少しつける */
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.target-name {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+}
+
+/* 銘柄選択ボタンのサイズを少し調整 */
+.select-target-button {
+    flex-grow: 0; /* ボタンが伸びないようにする */
+    font-size: 13px;
+    font-weight: normal;
+    padding: 6px 14px;
+}

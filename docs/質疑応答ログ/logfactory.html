@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>設計仕様 質疑応答ログ (Modern UI)</title>
+
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alasql@4"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* [UI刷新] フォントと基本スタイルの設定 */
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: #111827; /* ダークグレーの背景 */
+            color: #d1d5db; /* 明るいグレーのテキスト */
+        }
+
+        /* [UI刷新] カスタムクラスの定義 */
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.75rem; /* 12px */
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .status-unanswered {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #f87171;
+        }
+
+        .status-answered {
+            background-color: rgba(34, 197, 94, 0.1);
+            color: #4ade80;
+        }
+        
+        .status-archived {
+            background-color: rgba(100, 116, 139, 0.1);
+            color: #94a3b8;
+        }
+
+        .card-archived {
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+        .card-archived:hover {
+            opacity: 1;
+        }
+
+        /* トースト通知（ポップアップメッセージ）のスタイル */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            padding: 12px 24px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .toast.success { background-color: #22c55e; }
+        .toast.error { background-color: #ef4444; }
+        .toast.info { background-color: #3b82f6; }
+        
+        /* [UI刷新] 入力フォームのスタイル */
+        .form-input, .form-select, .form-textarea {
+            background-color: #1f2937;
+            border: 1px solid #4b5563;
+            color: #d1d5db;
+            border-radius: 0.5rem; /* 8px */
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 2px #312e81;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container mx-auto p-4 lg:p-8 max-w-7xl">
+        <header class="mb-8">
+            <h1 class="text-4xl font-bold text-gray-100 tracking-tight">Q&A Log</h1>
+            <p class="text-gray-400 mt-2">設計仕様に関する質疑応答を、この場所で一元管理します。</p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <aside class="lg:col-span-1">
+                <div class="bg-[#1f2937]/50 ring-1 ring-white/10 p-6 rounded-xl shadow-lg sticky top-8 space-y-8">
+
+                    <div>
+                        <h2 class="text-xl font-bold mb-4 border-b border-gray-700 pb-3 text-gray-200">新規質問を追加</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="new_screen_select" class="block text-sm font-medium text-gray-400 mb-1">画面名</label>
+                                <select id="new_screen_select" class="form-select mt-1 block w-full p-2"></select>
+                                <input type="text" id="new_screen_input" placeholder="新しい画面名を入力" class="form-input mt-2 hidden w-full p-2">
+                            </div>
+                            <div>
+                                <label for="new_use_case_category" class="block text-sm font-medium text-gray-400 mb-1">カテゴリ</label>
+                                <input type="text" id="new_use_case_category" placeholder="例: データ表示" class="form-input mt-1 block w-full p-2">
+                            </div>
+                            <div>
+                                <label for="new_question" class="block text-sm font-medium text-gray-400 mb-1">質問</label>
+                                <textarea id="new_question" rows="4" class="form-textarea mt-1 block w-full p-2" required></textarea>
+                            </div>
+                            <button id="add_qna_btn" class="w-full bg-indigo-600 text-white py-2.5 px-4 rounded-lg hover:bg-indigo-700 flex items-center justify-center font-semibold transition-colors">
+                                <span class="material-icons-outlined mr-2 text-base">add_comment</span>質問を保存
+                            </button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h2 class="text-xl font-bold mb-4 border-b border-gray-700 pb-3 text-gray-200">表示と操作</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="view_toggle" class="block text-sm font-medium text-gray-400 mb-1">表示切替</label>
+                                <select id="view_toggle" class="form-select mt-1 block w-full p-2">
+                                    <option value="active">進行中</option>
+                                    <option value="archived">アーカイブ</option>
+                                </select>
+                            </div>
+                            <div id="batch_actions_panel"></div>
+                            <div>
+                                <label for="screen_filter" class="block text-sm font-medium text-gray-400 mb-1">画面名フィルタ</label>
+                                <select id="screen_filter" class="form-select mt-1 block w-full p-2">
+                                    <option value="all">すべて</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h2 class="text-xl font-bold mb-4 border-b border-gray-700 pb-3 text-gray-200">エクスポート</h2>
+                        <button id="export_md_btn" class="w-full bg-gray-600 text-white py-2.5 px-4 rounded-lg hover:bg-gray-700 flex items-center justify-center font-semibold transition-colors">
+                            <span class="material-icons-outlined mr-2 text-base">download</span>Markdown出力
+                        </button>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="lg:col-span-2">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 id="view_title" class="text-2xl font-bold text-gray-200">進行中の議論</h2>
+                    <div>
+                        <input type="checkbox" id="select_all_checkbox" class="h-4 w-4 rounded border-gray-600 bg-gray-700 text-indigo-600 focus:ring-indigo-500 focus:ring-offset-gray-800">
+                        <label for="select_all_checkbox" class="ml-2 text-sm text-gray-400">すべて選択</label>
+                    </div>
+                </div>
+                <div id="qna_list" class="space-y-4"></div>
+            </main>
+        </div>
+        <div id="toast-container"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const DB_KEY = 'spec_qna_database_v6_modern'; // 新しいUI用のキー
+            const db = new alasql.Database();
+            let currentViewData = [];
+
+            // データベース保存処理
+            function saveDatabase() {
+                try {
+                    const data = db.exec('SELECT * FROM spec_qna');
+                    localStorage.setItem(DB_KEY, JSON.stringify(data));
+                } catch (e) {
+                    console.error("Failed to save database:", e);
+                    showToast("データベースの保存に失敗しました。", "error");
+                }
+            }
+
+            // データベース読み込み処理
+            function loadDatabase() {
+                db.exec('CREATE TABLE spec_qna (id INT, screen_name STRING, use_case_category STRING, question STRING, answer STRING, archived BOOLEAN);');
+                const data = localStorage.getItem(DB_KEY);
+                if (data) {
+                    try {
+                        const parsedData = JSON.parse(data);
+                        if (Array.isArray(parsedData) && parsedData.length > 0) {
+                            parsedData.forEach(item => {
+                                db.exec('INSERT INTO spec_qna VALUES ?', [item]);
+                            });
+                        } else {
+                            populateInitialData();
+                        }
+                    } catch (e) {
+                        console.error("Failed to load database, initializing fresh:", e);
+                        localStorage.removeItem(DB_KEY);
+                        populateInitialData();
+                    }
+                } else {
+                    populateInitialData();
+                }
+            }
+
+            // 初期データ投入
+            function populateInitialData() {
+                const initialData = [
+                    { id: 1, screen_name: 'ホーム', use_case_category: 'データが「空っぽ」の場合の表示', question: 'サービス開始直後や、直近24時間にハッシュタグ付きの投稿が一件もなかった場合、トレンドリストには何を表示すべきか？', answer: 'まず前提として投稿には必ずハッシュタグをつける決まりとなっています。この仕様に関してはアプリをローンチした一番最初はそもそも投稿がないので仕方ありませんが、その後はアクティブユーザーと投稿の頻度によってトレンド集計期間を変えようかなと思っています。最小単位は２４時間です', archived: false },
+                    { id: 2, screen_name: 'ホーム', use_case_category: 'データが「空っぽ」の場合の表示', question: 'ユーザーがハッシュタグをタップしたが、そのハッシュタグに関連付けられた銘柄が一つも存在しない場合、右パネルには何を表示すべきか？', answer: '右パネルには「このテーマに関連する銘柄はまだありません」というメッセージを表示する。', archived: false },
+                    { id: 3, screen_name: 'ホーム', use_case_category: 'データの「読み込みと更新」に関する体験', question: 'トレンドランキング等のデータ読み込み中、ユーザーには画面がどのように見えるか？', answer: null, archived: false },
+                    { id: 4, screen_name: '検索', use_case_category: '検索実行のトリガー', question: '検索は、キーワード入力中にリアルタイムで実行されますか？それともEnterキー押下後ですか？', answer: null, archived: false },
+                    { id: 5, screen_name: '検索', use_case_category: '検索履歴', question: 'ユーザーが過去に検索したキーワードの履歴を表示し、タップで再検索できる機能は必要ですか？', answer: null, archived: false },
+                    { id: 6, screen_name: '検索', use_case_category: '検索結果のソート', question: 'ファクターやユーザーの検索結果について、並び替え機能（例：新着順、いいね数順など）は必要ですか？', answer: '新着順と関連度順のソート機能が必要です。', archived: true },
+                ];
+                initialData.forEach(item => {
+                    db.exec('INSERT INTO spec_qna VALUES ?', [item]);
+                });
+                saveDatabase();
+            }
+            
+            // トースト表示
+            function showToast(message, type = 'success') {
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                toast.textContent = message;
+                document.getElementById('toast-container').appendChild(toast);
+                setTimeout(() => toast.classList.add('show'), 100);
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
+            }
+            
+            // 全体描画
+            function render() {
+                renderQnaList();
+                populateFilters();
+                renderBatchActions();
+                document.getElementById('select_all_checkbox').checked = false;
+            }
+
+            // Q&Aリスト描画
+            function renderQnaList() {
+                const screenFilter = document.getElementById('screen_filter').value;
+                const isArchivedView = document.getElementById('view_toggle').value === 'archived';
+                let query = 'SELECT * FROM spec_qna WHERE archived = ?';
+                const params = [isArchivedView];
+                if (screenFilter !== 'all') {
+                    query += ' AND screen_name = ?';
+                    params.push(screenFilter);
+                }
+                query += ' ORDER BY id DESC';
+                const qnaData = db.exec(query, params);
+                currentViewData = qnaData;
+                const qnaListContainer = document.getElementById('qna_list');
+                qnaListContainer.innerHTML = '';
+                document.getElementById('view_title').textContent = isArchivedView ? 'アーカイブ済み' : '進行中の議論';
+
+                if (qnaData.length === 0) {
+                    qnaListContainer.innerHTML = `<div class="bg-gray-800/50 ring-1 ring-white/10 p-10 rounded-xl text-center text-gray-400">表示する項目がありません。</div>`;
+                    return;
+                }
+
+                qnaData.forEach(item => {
+                    const isAnswered = item.answer && item.answer.trim() !== '';
+                    let statusText, statusClass, statusIcon;
+                    if (item.archived) {
+                        statusText = 'アーカイブ済み'; statusClass = 'status-archived'; statusIcon = 'inventory_2';
+                    } else if (isAnswered) {
+                        statusText = '回答済み'; statusClass = 'status-answered'; statusIcon = 'check_circle';
+                    } else {
+                        statusText = '未回答'; statusClass = 'status-unanswered'; statusIcon = 'help_outline';
+                    }
+                    const card = document.createElement('div');
+                    card.className = `bg-gray-800/50 ring-1 ring-white/10 rounded-xl shadow-lg overflow-hidden transition-all duration-300 ${item.archived ? 'card-archived' : ''}`;
+                    card.innerHTML = `
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-3">
+                                <div class="flex items-center gap-3 flex-wrap">
+                                    <input type="checkbox" data-id="${item.id}" class="qna-checkbox h-4 w-4 rounded border-gray-600 bg-gray-700 text-indigo-600 focus:ring-indigo-500 focus:ring-offset-gray-800 cursor-pointer">
+                                    <span class="text-sm font-bold text-indigo-400 bg-indigo-500/10 py-1 px-3 rounded-full">${item.screen_name}</span>
+                                    <span class="text-xs text-gray-400">${item.use_case_category}</span>
+                                </div>
+                                <span class="status-badge ${statusClass}"><span class="material-icons-outlined text-sm">${statusIcon}</span>${statusText}</span>
+                            </div>
+                            <div class="flex">
+                                <span class="material-icons-outlined text-indigo-400 mt-1 mr-4">help</span>
+                                <p class="text-gray-200 flex-1">${item.question}</p>
+                            </div>
+                            <div class="mt-4 pl-10">
+                                <div class="flex">
+                                    <span class="material-icons-outlined text-green-400 mt-1 mr-4">chat_bubble</span>
+                                    <div class="flex-1">
+                                        <textarea id="answer_${item.id}" rows="3" class="form-textarea w-full p-2 text-sm" placeholder="回答を入力..." ${item.archived ? 'disabled' : ''}>${item.answer || ''}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-900/50 px-6 py-3 flex justify-end items-center border-t border-white/10">
+                             <button data-id="${item.id}" class="delete-btn text-red-400 hover:text-red-300 text-sm font-medium flex items-center disabled:opacity-50 transition-colors" ${item.archived ? 'disabled' : ''}><span class="material-icons-outlined text-base mr-1">delete</span>削除</button>
+                             <button data-id="${item.id}" class="save-answer-btn bg-green-600 text-white py-1.5 px-4 rounded-md hover:bg-green-700 text-sm font-bold flex items-center disabled:opacity-50 transition-colors ml-4" ${item.archived ? 'disabled' : ''}><span class="material-icons text-base mr-1">save</span>保存</button>
+                        </div>`;
+                    qnaListContainer.appendChild(card);
+                });
+            }
+
+            // フィルター投入
+            function populateFilters() {
+                const screenNames = db.exec('SELECT DISTINCT screen_name FROM spec_qna ORDER BY screen_name');
+                const filterSelect = document.getElementById('screen_filter');
+                const newScreenSelect = document.getElementById('new_screen_select');
+                const currentFilterValue = filterSelect.value;
+                const currentNewScreenValue = newScreenSelect.value;
+                const firstFilterOption = filterSelect.options[0];
+                filterSelect.innerHTML = '';
+                filterSelect.appendChild(firstFilterOption);
+                newScreenSelect.innerHTML = '';
+
+                screenNames.forEach(item => {
+                    const option = new Option(item.screen_name, item.screen_name);
+                    filterSelect.appendChild(option.cloneNode(true));
+                    newScreenSelect.appendChild(option);
+                });
+
+                const addNewOption = new Option('--- 新しい画面を追加 ---', 'add_new');
+                newScreenSelect.appendChild(addNewOption);
+                filterSelect.value = currentFilterValue;
+                newScreenSelect.value = currentNewScreenValue;
+            }
+            
+            // 一括操作ボタン描画
+            function renderBatchActions() {
+                const isArchivedView = document.getElementById('view_toggle').value === 'archived';
+                const panel = document.getElementById('batch_actions_panel');
+                const baseClass = "w-full text-white py-2.5 px-4 rounded-lg flex items-center justify-center font-semibold transition-colors";
+                if (isArchivedView) {
+                    panel.innerHTML = `<button id="restore_selected_btn" class="${baseClass} bg-green-600 hover:bg-green-700"><span class="material-icons-outlined mr-2">unarchive</span>選択項目を復元</button>`;
+                } else {
+                    panel.innerHTML = `<button id="archive_selected_btn" class="${baseClass} bg-sky-600 hover:bg-sky-700"><span class="material-icons-outlined mr-2">archive</span>選択項目をアーカイブ</button>`;
+                }
+            }
+            
+            // 選択ID取得
+            function getSelectedIds() {
+                return Array.from(document.querySelectorAll('.qna-checkbox:checked')).map(cb => parseInt(cb.dataset.id));
+            }
+
+            // --- イベントハンドラ ---
+            document.getElementById('add_qna_btn').addEventListener('click', () => {
+                const screenSelect = document.getElementById('new_screen_select');
+                const screenInput = document.getElementById('new_screen_input');
+                let screen = (screenSelect.value === 'add_new') ? screenInput.value.trim() : screenSelect.value;
+                if (!screen) { showToast(screenSelect.value === 'add_new' ? '新しい画面名を入力してください。' : '画面名を選択してください。', 'error'); return; }
+
+                const category = document.getElementById('new_use_case_category').value.trim();
+                const question = document.getElementById('new_question').value.trim();
+                if (!category || !question) { showToast('カテゴリと質問は必須です。', 'error'); return; }
+
+                const maxIdResult = db.exec('SELECT MAX(id) as maxid FROM spec_qna');
+                const nextId = (maxIdResult[0].maxid || 0) + 1;
+                const newRecord = { id: nextId, screen_name: screen, use_case_category: category, question: question, answer: null, archived: false };
+
+                db.exec('INSERT INTO spec_qna VALUES ?', [newRecord]);
+                saveDatabase();
+                showToast('新しい質問が追加されました。');
+                
+                document.getElementById('new_use_case_category').value = '';
+                document.getElementById('new_question').value = '';
+                screenInput.value = '';
+                screenInput.classList.add('hidden');
+                
+                render();
+                screenSelect.value = screen;
+            });
+
+            document.getElementById('new_screen_select').addEventListener('change', e => {
+                const newScreenInput = document.getElementById('new_screen_input');
+                newScreenInput.classList.toggle('hidden', e.target.value !== 'add_new');
+                if (e.target.value === 'add_new') newScreenInput.focus();
+            });
+
+            document.getElementById('qna_list').addEventListener('click', e => {
+                const saveBtn = e.target.closest('.save-answer-btn');
+                const deleteBtn = e.target.closest('.delete-btn');
+                if (saveBtn) {
+                    const id = parseInt(saveBtn.dataset.id, 10);
+                    const answer = document.getElementById(`answer_${id}`).value.trim();
+                    db.exec('UPDATE spec_qna SET answer = ? WHERE id = ?', [answer, id]);
+                    saveDatabase();
+                    showToast(`ID:${id} の回答を保存しました。`);
+                    render();
+                }
+                if (deleteBtn) {
+                    const id = parseInt(deleteBtn.dataset.id, 10);
+                    if (confirm(`ID:${id} の項目を本当に削除しますか？\nこの操作は元に戻せません。`)) {
+                        db.exec('DELETE FROM spec_qna WHERE id = ?', [id]);
+                        saveDatabase();
+                        showToast(`ID:${id} の項目を削除しました。`, 'info');
+                        render();
+                    }
+                }
+            });
+
+            document.getElementById('batch_actions_panel').addEventListener('click', e => {
+                const ids = getSelectedIds();
+                if (ids.length === 0) { showToast('項目が選択されていません。', 'error'); return; }
+                
+                const queryPlaceholder = ids.map(() => '?').join(',');
+                if (e.target.closest('#archive_selected_btn')) {
+                    db.exec(`UPDATE spec_qna SET archived = true WHERE id IN (${queryPlaceholder})`, ids);
+                    showToast(`${ids.length}件の項目をアーカイブしました。`, 'info');
+                }
+                if (e.target.closest('#restore_selected_btn')) {
+                    db.exec(`UPDATE spec_qna SET archived = false WHERE id IN (${queryPlaceholder})`, ids);
+                    showToast(`${ids.length}件の項目を復元しました。`);
+                }
+                saveDatabase();
+                render();
+            });
+            
+            document.getElementById('export_md_btn').addEventListener('click', () => {
+                const data = currentViewData;
+                if (data.length === 0) { showToast('エクスポート対象のデータがありません。', 'error'); return; }
+                const isArchivedView = document.getElementById('view_toggle').value === 'archived';
+                const screenFilter = document.getElementById('screen_filter').value;
+                let mdContent = `# 設計仕様 質疑応答ログ (${screenFilter !== 'all' ? screenFilter : '全画面'} / ${isArchivedView ? 'アーカイブ' : '進行中'})\n\n`;
+                data.forEach(item => {
+                    const statusText = item.archived ? 'アーカイブ済み' : (item.answer && item.answer.trim() !== '' ? '回答済み' : '未回答');
+                    mdContent += `## [${item.screen_name}] ${item.use_case_category}\n- **[Q]** ${item.question}\n- **[A]** ${item.answer || '（未回答）'}\n- **ステータス:** ${statusText}\n\n`;
+                });
+                const blob = new Blob([mdContent], { type: 'text/markdown;charset=utf-8' });
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = `設計仕様ログ_${new Date().toISOString().slice(0,10)}.md`;
+                a.click();
+                URL.revokeObjectURL(a.href);
+                showToast('Markdownファイルを出力しました。');
+            });
+
+            document.getElementById('select_all_checkbox').addEventListener('change', e => {
+                document.querySelectorAll('.qna-checkbox').forEach(cb => cb.checked = e.target.checked);
+            });
+
+            document.getElementById('view_toggle').addEventListener('change', render);
+            document.getElementById('screen_filter').addEventListener('change', render);
+            
+            // --- 初期ロード ---
+            loadDatabase();
+            render();
+        });
+    </script>
+</body>
+
+</html>

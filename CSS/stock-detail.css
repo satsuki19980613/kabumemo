@@ -1,0 +1,164 @@
+/* ==============================
+   銘柄詳細ページ専用スタイル
+============================== */
+
+/* --- ヘッダー --- */
+.stock-detail-header {
+    display: flex;
+    align-items: center;
+    padding: 6px;
+    border-bottom: 1px solid #ddd;
+    background-color: #f8f8f8;
+    flex-shrink: 0;
+}
+.back-button {
+    color: #5e5e5ec9;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+.back-button .material-icons { font-size: 24px; }
+.stock-title-container { margin-left: 10px; }
+.stock-title-container h2 { margin: 0; font-size: 18px; color: #333; }
+.stock-title-container p { margin: 0; font-size: 12px; color: #888; }
+
+
+/* --- 関連ファクターリスト --- */
+.factor-summary-list {
+    list-style: none;
+    padding: 10px;
+    margin: 0;
+    overflow-y: auto;
+    flex-grow: 1;
+    background-color: #f0f2f5;
+}
+
+.factor-summary-item {
+    background: #fff;
+    border-radius: 8px;
+    padding: 16px 16px 16px 24px; /* 左側の余白をバーのために広げる */
+    margin-bottom: 12px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+    position: relative; /* バーの基準点として必要 */
+}
+.factor-summary-item:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* --- カード内部の要素 --- */
+.factor-summary-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0 0 8px 0;
+}
+.factor-summary-snippet {
+    font-size: 13px;
+    color: #666;
+    margin: 0 0 16px 0;
+    line-height: 1.6;
+}
+.factor-summary-sentiment {
+    display: flex;
+    gap: 16px;
+    border-top: 1px solid #eee;
+    padding-top: 12px;
+}
+.sentiment {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
+    font-weight: bold;
+}
+.sentiment .material-icons { font-size: 20px; }
+.sentiment-positive { color: #d32f2f; }
+.sentiment-neutral { color: #757575; }
+.sentiment-negative { color: #1976d2; }
+
+
+/* --- センチメント・バーのスタイル --- */
+.factor-summary-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 8px;
+    height: 100%;
+    background-color: #757575; /* デフォルトは灰色（中立） */
+    border-radius: 8px 0 0 8px; /* 角を丸くする */
+}
+.factor-summary-item.sentiment-positive-overall::before {
+    background-color: #d32f2f; /* 赤 */
+}
+.factor-summary-item.sentiment-negative-overall::before {
+    background-color: #1976d2; /* 青 */
+}
+
+/* stock-detail.css に追記 */
+
+/* --- カードヘッダー（タイトルとアイコン）のレイアウト --- */
+.summary-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.summary-card-header .factor-summary-title {
+    margin-bottom: 0; /* 下にあったマージンを親に移動 */
+}
+
+/* 投稿タイプアイコンのスタイル */
+.post-type-icon {
+    color: #888;
+    flex-shrink: 0;
+}
+.post-type-icon .icon-square {
+    font-size: 18px;
+}
+
+
+/* --- カードフッター（センチメントとボタン）のレイアウト --- */
+.factor-summary-sentiment {
+    align-items: center; /* 中央揃え */
+    justify-content: space-between; /* 両端に配置 */
+}
+.sentiment-counts {
+    display: flex;
+    gap: 16px;
+}
+
+/* 「元のファクターを見る」ボタンのスタイル */
+.view-original-button {
+    background-color: transparent;
+    border: 1px solid #aaa;
+    color: #555;
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: bold;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.2s, color 0.2s;
+}
+.view-original-button:hover {
+    background-color: #f0f0f0;
+    color: #000;
+}
+
+
+/* stock-detail.css に追記 */
+
+/* --- ヘッダーのインフォメーションアイコン --- */
+.header-info-icon {
+    margin-left: auto; /* 右端に配置 */
+    color: #888;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.header-info-icon:hover {
+    color: #333;
+}

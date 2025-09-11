@@ -1,0 +1,179 @@
+/* ==============================
+   検索画面専用スタイル
+============================== */
+
+/* --- 検索コンテンツエリア --- */
+.search-container {
+    padding: 20px;
+    flex-grow: 1;
+}
+
+/* --- 検索カテゴリ選択 (アウトラインボタンデザイン) --- */
+.search-category-selector {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 20px;
+}
+/* ラジオボタン本体は隠す */
+.search-category-selector input[type="radio"] {
+    display: none;
+}
+/* ラベル内のspanをボタンのように見せる */
+.search-category-selector span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 7px 11px;
+    border: 1px solid #5f5f5f;
+    border-radius: 20px; /* 丸みのあるピル形状に変更 */
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    white-space: nowrap;
+}
+.search-category-selector .material-icons {
+    font-size: 16px;
+}
+/* 未選択の状態 */
+.search-category-selector input[type="radio"]:not(:checked) + span {
+    background-color: transparent;
+    color: #5f5f5f;
+}
+.search-category-selector input[type="radio"]:not(:checked) + span:hover {
+    background-color: #f7f7f7;
+}
+/* 選択された状態 */
+.search-category-selector input[type="radio"]:checked + span {
+    background-color: #5f5f5fbb;
+    color: #fff;
+    border-color: #5f5f5f;
+}
+.search-category-selector input[type="radio"]:checked + span .material-icons {
+    color: #fff;
+}
+
+
+/* --- 検索ボックス --- */
+.search-box-container {
+    display: flex;
+    align-items: center;
+    background-color: #f0f2f5;
+    border-radius: 8px;
+    padding: 10px;
+}
+.search-box-container .material-icons {
+    color: #888;
+    margin-right: 8px;
+}
+.search-box-container input[type="search"] {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    font-family: "Zen Maru Gothic", sans-serif;
+    outline: none;
+}
+.search-box-container input[type="search"]::placeholder {
+    color: #aaa;
+}
+
+
+/* --- 下部タブバーのアクティブ状態 --- */
+.bottom-tab-bar .tab-item.active .material-icons {
+    color: #333;
+}
+
+
+
+/* --- 検索結果 --- */
+.search-results-container {
+    margin-top: 20px;
+}
+
+.result-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.result-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+.result-item:hover {
+    background-color: #f9f9f9;
+}
+
+.result-item .user-icon-small {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 12px;
+    object-fit: cover;
+}
+
+.result-item .item-icon {
+    font-size: 24px;
+    color: #888;
+    margin-right: 12px;
+}
+
+.result-item .hashtag-icon {
+    font-size: 24px;
+    font-weight: bold;
+    color: #888;
+    margin-right: 12px;
+}
+
+.item-content {
+    flex-grow: 1;
+}
+
+.item-title {
+    font-weight: bold;
+    color: #333;
+    font-size: 14px;
+    margin: 0 0 4px 0;
+}
+.item-snippet {
+    font-size: 12px;
+    color: #4b4b4b;
+    margin: 0;
+}
+
+.follow-button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+/* search.css に追記 */
+
+/* ファクター検索結果アイテムのレイアウト調整 */
+.result-item.factor-item {
+    align-items: flex-start; /* アイコンが複数行テキストの中央にこないように */
+}
+
+.factor-item .item-content {
+    margin-right: 10px; /* アイコンとの間に隙間を作る */
+}
+
+/* ファクタータイプを示すアイコンのスタイル */
+.factor-item .post-type-icon {
+    margin-left: auto; /* 右端に配置 */
+    color: #888;
+    padding-top: 2px; /* 位置の微調整 */
+}
+.factor-item .icon-square {
+    font-size: 18px; /* スレッド画面とサイズを合わせる */
+}

@@ -1,0 +1,64 @@
+/* ==============================
+   エラー表示コンポーネント (error-display.css)
+============================== */
+
+/* --- 全画面を覆うコンテナ --- */
+.error-display-container {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    height: 812px; /* 親要素いっぱいに広がるように */
+    box-sizing: border-box;
+    text-align: center;
+    background-color: #f0f2f5; /* 背景色を共通の薄いグレーに */
+}
+
+/* --- アイコン --- */
+.error-icon {
+    font-size: 64px;
+    color: #888;
+}
+
+/* --- メインメッセージ --- */
+.error-message {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin: 0 0 8px 0;
+}
+
+/* --- サブメッセージ --- */
+.error-sub-message {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.6;
+    margin: 0 0 32px 0;
+    max-width: 280px; /* メッセージが長くなりすぎないように */
+}
+
+/* --- リトライボタン --- */
+.retry-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.retry-button:hover {
+    background-color: #555;
+}
+
+.retry-button:active {
+    transform: scale(0.98);
+}

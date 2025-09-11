@@ -1,0 +1,361 @@
+/* ==============================
+   1. 基本設定 (共通)
+============================== */
+body {
+    margin: 0;
+    padding: 0;
+    background: #f0f2f5;
+    color: #333;
+    height: 100vh;
+    font-family: "Zen Maru Gothic", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ==============================
+   2. 全体コンテナ (共通)
+============================== */
+.main-content {
+    width: 375px;
+    height: 812px;
+    background: #fff;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+.subContainer {
+    display: flex;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+/* ==============================
+   3. 左右パネルのレイアウト (共通)
+============================== */
+.leftContainer {
+    width: 100%;
+    transition: width 0.3s ease-in-out;
+}
+.rightContainer {
+    display: none;
+    width: 0;
+}
+.subContainer.show-right-panel .leftContainer {
+    width: 50%;
+}
+.subContainer.show-right-panel .rightContainer {
+    display: flex;
+    width: 50%;
+}
+
+/* ==============================
+   4. 右側コンテナ (共通)
+============================== */
+.rightContainer {
+    background: linear-gradient(200deg, #e2788c, #83adf0);
+    flex-direction: column;
+    position: relative;
+}
+.close-right-panel-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: rgba(58, 58, 58, 0.377);
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 10;
+    transition: color 0.2s, transform 0.2s;
+    padding: 5px;
+}
+.close-right-panel-button:hover {
+    color: #fff;
+    transform: scale(1.1);
+}
+.sectionPositive, .sectionNeutral, .sectionNegative {
+    flex: 1;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+.sectionPositive::before, .sectionNeutral::before, .sectionNegative::before {
+    content: '';
+    font-family: 'Material Symbols Outlined';
+    font-size: 50px;
+    color: #ffffff;
+    position: absolute;
+    top: 20%;
+    left: 75%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    opacity: 0.15;
+}
+.sectionPositive::before { content: '\e8e5'; } /* trending_up */
+.sectionNeutral::before { content: '\e8e4'; } /* trending_flat */
+.sectionNegative::before { content: '\e8e3'; } /* trending_down */
+
+.stock-list {
+    flex-grow: 1;
+    overflow-y: auto;
+    position: relative;
+    z-index: 1;
+    padding-bottom: 40px;
+}
+.stock-item {
+    padding: 6px;
+    margin: 4px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background 0.3s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #e6e6e6;
+}
+.stock-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+.add-stock-button {
+    background-color: transparent;
+    color: rgb(251 251 251 / 61%);
+    border: none;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    z-index: 1;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+}
+.add-stock-button:hover {
+    transform: translateX(-50%) scale(1.1);
+}
+.add-stock-button .material-icons {
+    font-size: 32px;
+}
+.sectionPositive:hover .add-stock-button,
+.sectionNeutral:hover .add-stock-button,
+.sectionNegative:hover .add-stock-button {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ==============================
+   5. 下部タブバー (共通)
+============================== */
+.bottom-tab-bar {
+    width: 100%;
+    height: 56px;
+    background: #f0f2f5;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid #ddd;
+    flex-shrink: 0;
+}
+.tab-item {
+    flex: 1;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+}
+.tab-item .material-icons {
+    font-size: 28px;
+    color: #555;
+}
+.profile-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* ==============================
+   6. 各種モーダル (共通)
+============================== */
+.post-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: none; /* 初期状態は非表示 */
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.post-modal-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+.post-modal-content {
+    background: #fff;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 340px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+/* ... (モーダルの残りのスタイルは省略) ... */
+
+
+/* ==============================
+   7. FABボタン (共通)
+============================== */
+.fab-button {
+    position: absolute;
+    bottom: 76px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.fab-button:hover {
+    background-color: #555;
+}
+
+/* ==============================
+   8. リンク線の排除 (共通)
+============================== */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ==============================
+   9. ページヘッダー (共通)
+============================== */
+.page-header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    background-color: #fff;
+    flex-shrink: 0;
+}
+
+.page-header .back-button {
+    color: #555;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.page-header .header-title {
+    flex-grow: 1;
+    text-align: center;
+    margin-right: calc(24px + 10px); /* 戻るボタンアイコン幅 + マージン */
+}
+
+.page-header .header-title h2 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.page-header .header-title p {
+    margin: 0;
+    font-size: 12px;
+    color: #888;
+}
+
+/* ==============================
+   10. リストレイアウト (共通)
+============================== */
+.item-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.list-item {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.list-item:hover {
+    background-color: #f9f9f9;
+}
+
+.list-item__icon {
+    margin-right: 16px;
+    color: #555;
+    display: flex;
+    align-items: center;
+}
+
+.list-item__content {
+    flex-grow: 1;
+}
+
+.list-item__title {
+    font-weight: bold;
+    color: #333;
+    font-size: 14px;
+    margin: 0 0 4px 0;
+}
+
+.list-item__snippet {
+    font-size: 12px;
+    color: #4b4b4b;
+    margin: 0;
+}
+
+.list-item__action {
+    margin-left: auto;
+    color: #ccc;
+}
+
+/* ==============================
+   11. ボタン (共通)
+============================== */
+.c-button {
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 13px;
+    transition: all 0.2s;
+    border: 1px solid #5f5f5f;
+}
+
+.c-button--outline {
+    background-color: transparent;
+    color: #5f5f5f;
+}
+
+.c-button--outline:hover {
+    background-color: #f7f7f7;
+    color: #333;
+}

@@ -1,0 +1,116 @@
+/* ==============================
+   設定画面専用スタイル
+============================== */
+
+.settings-page-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: #f0f2f5;
+}
+
+/* --- ヘッダー --- */
+.settings-header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    background-color: #fff;
+    flex-shrink: 0;
+}
+.settings-header .back-button {
+    color: #555;
+    text-decoration: none;
+}
+.settings-header .header-title {
+    flex-grow: 1;
+    text-align: center;
+    margin-right: 24px; /* 戻るボタンの幅を考慮して中央揃え */
+}
+.settings-header h2 {
+    margin: 0;
+    font-size: 18px;
+}
+
+/* --- プロフィール画面ヘッダーの歯車ボタン --- */
+.profile-header {
+    position: relative;
+}
+.settings-button {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    color: #555;
+    text-decoration: none;
+    padding: 5px;
+}
+.settings-button .material-icons {
+    font-size: 24px;
+}
+
+/* --- 設定リスト --- */
+.settings-list {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.settings-category {
+    margin-top: 10px;
+}
+.settings-category:first-child {
+    margin-top: 0;
+}
+
+.category-title {
+    font-size: 14px;
+    color: #888;
+    padding: 16px 16px 8px 16px;
+    margin: 0;
+}
+
+.category-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: #fff;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s;
+}
+.item:last-child {
+    border-bottom: none;
+}
+.item:hover {
+    background-color: #f9f9f9;
+}
+
+.item-icon {
+    color: #555;
+    margin-right: 16px;
+}
+
+.item-text {
+    flex-grow: 1;
+    font-size: 16px;
+    color: #333;
+}
+
+.item-arrow {
+    color: #ccc;
+    font-size: 18px;
+}
+
+/* ログアウトボタンの特別スタイル */
+.item.logout .item-icon,
+.item.logout .item-text {
+    color: #d32f2f; /* 赤色にして警告を示す */
+}

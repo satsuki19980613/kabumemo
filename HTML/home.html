@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>株メモ - ホーム</title>
+    <link rel="stylesheet" href="../CSS/common.css">
+    <link rel="stylesheet" href="../CSS/home.css">
+    <link rel="stylesheet" href="../CSS/modal-post.css">
+    <link rel="stylesheet" href="../CSS/factor-card.css">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="main-content">
+        <div class="home-tab-container">
+            <button class="home-tab active" data-tab="watchlist">ウォッチリスト</button>
+            <button class="home-tab" data-tab="memo">メモ</button>
+            <button class="home-tab" data-tab="hashtags">ハッシュタグ</button>
+        </div>
+
+        <div class="subContainer">
+            <div class="leftContainer">
+                <div id="watchlist" class="tab-content active">
+                    <div class="watchlist-list">
+                        <a href="stock-detail.html" style="text-decoration: none; color: inherit; display: block;">
+                            <div class="watchlist-card">
+                                <div class="watchlist-card-header">
+                                    <div class="stock-info">
+                                        <h4>トヨタ自動車</h4>
+                                        <span>7203</span>
+                                    </div>
+                                </div>
+                                <div class="horizontal-scroll-container"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="memo" class="tab-content">
+                    <button class="view-details-button" style="display: none;">
+                        詳細を見る
+                    </button>
+                    <div class="factor-list" style="padding: 5px 5px 70px 5px;"></div>
+                </div>
+
+                <div id="hashtags" class="tab-content">
+                    <div class="hashtag-list-container"
+                        style="padding: 10px; overflow-y: auto; flex-grow: 1; background: #ebebebd4;">
+                        <div class="watchlist-card" data-href="thread.html" style="cursor: pointer;">
+                            <div class="watchlist-card-header">
+                                <div class="stock-info">
+                                    <h4 style="font-size: 15px;"># 金融政策</h4>
+                                </div>
+                                <div class="stock-price">
+                                    <span class="change" style="font-size: 13px;">152件のファクター</span>
+                                </div>
+                            </div>
+                            <div class="horizontal-scroll-container"></div>
+                        </div>
+                        <div class="watchlist-card" data-href="thread.html" style="cursor: pointer;">
+                            <div class="watchlist-card-header">
+                                <div class="stock-info">
+                                    <h4 style="font-size: 15px;"># 円安メリット</h4>
+                                </div>
+                                <div class="stock-price">
+                                    <span class="change" style="font-size: 13px;">89件のファクター</span>
+                                </div>
+                            </div>
+                            <div class="horizontal-scroll-container"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rightContainer">
+                <span class="close-right-panel-button material-icons">close</span>
+                <div class="sectionPositive">
+                    <div class="stock-list">
+                        <div class="stock-item">INPEX（1605）</div>
+                        <div class="stock-item">JAPEX（1662）</div>
+                    </div>
+                    <button class="add-stock-button" data-section="positive"><span
+                            class="material-icons">add_circle_outline</span></button>
+                </div>
+                <div class="sectionNeutral">
+                    <div class="stock-list"></div>
+                    <button class="add-stock-button" data-section="neutral"><span
+                            class="material-icons">add_circle_outline</span></button>
+                </div>
+                <div class="sectionNegative">
+                    <div class="stock-list"></div>
+                    <button class="add-stock-button" data-section="negative"><span
+                            class="material-icons">add_circle_outline</span></button>
+                </div>
+            </div>
+        </div>
+        <button class="fab-button">
+            <span class="material-icons">add</span>
+        </button>
+
+        <div class="bottom-tab-bar">
+            <a href="home.html" class="tab-item active"><span class="material-icons">home</span></a>
+            <a href="search.html" class="tab-item"><span class="material-icons">search</span></a>
+            <a href="calendar.html" class="tab-item"><span class="material-icons">calendar_today</span></a>
+            <a href="settings.html" class="tab-item"><span class="material-icons">settings</span></a>
+        </div>
+    </div>
+
+    <div class="post-modal-overlay" id="factorDetailModal">
+        <div class="post-modal-content">
+            <div class="modal-header">
+                <h3>詳細</h3>
+                <span id="edit-factor-button" class="material-icons">edit</span>
+                <span class="close-button material-icons">close</span>
+            </div>
+            <div class="modal-body" id="detailModalBody">
+            </div>
+        </div>
+    </div>
+
+    <script src="../JS/common.js"></script>
+    <script src="../JS/home.js"></script>
+
+</body>
+
+</html>

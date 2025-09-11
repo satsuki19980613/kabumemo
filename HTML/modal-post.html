@@ -1,0 +1,144 @@
+<div class="post-modal-overlay" id="postModal">
+    <div class="post-modal-content">
+        <div class="modal-header">
+            <span class="back-to-step1-button material-icons" style="display: none;">arrow_back_ios</span>
+            <h3 id="post-modal-title">新規メモ</h3>
+            <span class="close-button material-icons">close</span>
+        </div>
+
+        <div class="modal-body modal-step" id="modal-step1">
+            <h4 class="modal-step-title">メモの種類を選択してください</h4>
+            <div class="post-type-options-vertical">
+                <label>
+                    <input type="radio" name="postType" value="つぶやきメモ" checked>
+                    <span>つぶやきメモ</span>
+                    <span class="material-icons info-icon">info_outline</span>
+                </label>
+                <label>
+                    <input type="radio" name="postType" value="個別銘柄メモ">
+                    <span>特定の銘柄について</span>
+                    <span class="material-icons info-icon">info_outline</span>
+                </label>
+                <label>
+                    <input type="radio" name="postType" value="テーマメモ">
+                    <span>ニュースやテーマ</span>
+                    <span class="material-icons info-icon">info_outline</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="modal-body modal-step" id="modal-step2" style="display: none;">
+
+            <div class="post-editor-container">
+                <div id="editorTitle" contenteditable="true" class="post-editor-title" placeholder="タイトルを入力"></div>
+                <div id="editorContent" contenteditable="true" class="post-editor-content" placeholder="内容を入力..."></div>
+            </div>
+
+            <div class="form-group" id="targetStockContainer" style="display: none;">
+                <label>対象銘柄</label>
+                <div class="factor-target-container">
+                    <span id="targetStockName" class="target-name">未選択</span>
+                    <button type="button" class="modal-btn select-target-button">銘柄を選択</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="factorHashtagInput">ハッシュタグ</label>
+                <div class="multi-hashtag-container">
+                    <div id="hashtag-tags-container" class="hashtag-tags-container"></div>
+                    <input type="text" id="factorHashtagInput" placeholder="入力後 Enter で追加">
+                </div>
+            </div>
+
+            <div class="form-group-toggle">
+                <label>
+                    <input type="checkbox" id="togglePeriodSetting">
+                    <span>影響期間を設定する</span>
+                </label>
+            </div>
+            <div class="period-setting-container" style="display: none;">
+                <input type="date" id="factor-period-start">
+                <span class="period-separator">〜</span>
+                <input type="date" id="factor-period-end">
+            </div>
+
+            <div class="form-group">
+                <label for="factorImageUpload" class="image-upload-label">
+                    <span class="material-icons">add_photo_alternate</span>
+                    <span>画像を追加</span>
+                </label>
+                <input type="file" id="factorImageUpload" accept="image/*" style="display: none;">
+                <div id="imagePreviewContainer" class="image-preview-container" style="display: none;">
+                    <img id="imagePreview" src="#" alt="プレビュー">
+                    <button type="button" id="removeImageBtn" class="remove-image-btn">
+                        <span class="material-icons">cancel</span>
+                    </button>
+                </div>
+            </div>
+            </div> <div class="modal-footer" id="footer-step1">
+            <button class="modal-btn" id="next-button">次へ</button>
+        </div>
+        <div class="modal-footer" id="footer-step2" style="display: none;">
+            <button class="modal-btn" id="save-button">保存</button>
+        </div>
+    </div>
+</div>
+
+
+<div class="post-modal-overlay" id="infoModal">
+    <div class="post-modal-content">
+        <div class="modal-header">
+            <h3>メモの種類について</h3>
+            <span class="close-button material-icons">close</span>
+        </div>
+        <div class="modal-body">
+            <div class="info-section">
+                <h5 class="info-title">つぶやきメモ</h5>
+                <p class="info-description">日々の気づきや相場観など、特定の銘柄やテーマに縛られないシンプルなメモです。</p>
+            </div>
+            <div class="info-section">
+                <h5 class="info-title">特定の銘柄について</h5>
+                <p class="info-description">決算情報やIRニュースなど、一つの銘柄に特化したメモを作成します。対象銘柄を一つ設定できます。</p>
+            </div>
+            <div class="info-section">
+                <h5 class="info-title">ニュースやテーマ</h5>
+                <p class="info-description">「円安」や「半導体業界の動向」など、複数の銘柄に影響する可能性のあるテーマに関するメモです。関連する銘柄を後から複数紐づけることができます。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="post-modal-overlay" id="stockSearchModal">
+    <div class="post-modal-content">
+        <div class="modal-header">
+            <h3>銘柄を検索</h3>
+            <span class="close-button material-icons">close</span>
+        </div>
+        <div class="modal-body">
+            <div class="search-box-container">
+                <span class="material-icons">search</span>
+                <input type="search" placeholder="銘柄名・証券コードで検索">
+            </div>
+            <ul class="stock-search-results">
+                <li class="result-item stock-item" data-stock-name="トヨタ自動車" data-stock-code="7203">
+                    <div class="item-content">
+                        <p class="item-title">トヨタ自動車</p>
+                        <p class="item-snippet">7203 / プライム市場</p>
+                    </div>
+                </li>
+                <li class="result-item stock-item" data-stock-name="ソニーグループ" data-stock-code="6758">
+                    <div class="item-content">
+                        <p class="item-title">ソニーグループ</p>
+                        <p class="item-snippet">6758 / プライム市場</p>
+                    </div>
+                </li>
+                <li class="result-item stock-item" data-stock-name="任天堂" data-stock-code="7974">
+                    <div class="item-content">
+                        <p class="item-title">任天堂</p>
+                        <p class="item-snippet">7974 / プライム市場</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

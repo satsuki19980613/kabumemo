@@ -1,0 +1,68 @@
+/* ==============================
+   データなし（Empty State）画面のスタイル
+============================== */
+
+/* --- 全体を囲むコンテナ --- */
+.empty-state-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 上下中央揃え */
+    align-items: center;     /* 左右中央揃え */
+    height: 100%;            /* 親要素いっぱいに広がる */
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+    background-color: #ebebebd4; /* 背景色をホーム画面と合わせる */
+}
+
+.empty-state-content {
+    max-width: 300px;
+}
+
+/* --- アイコン --- */
+.empty-state-icon {
+    font-size: 56px;
+    color: #a0a0a0;
+    margin-bottom: 16px;
+}
+
+/* --- メインメッセージ --- */
+.empty-state-message {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin: 0 0 8px 0;
+}
+
+/* --- サブメッセージ --- */
+.empty-state-sub-message {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.6;
+    margin: 0 0 24px 0;
+}
+
+/* --- アクションボタン --- */
+.empty-state-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: "Zen Maru Gothic", sans-serif;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.empty-state-button:hover {
+    background-color: #555;
+}
+
+.empty-state-button:active {
+    transform: scale(0.98);
+}

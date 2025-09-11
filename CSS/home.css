@@ -1,0 +1,442 @@
+/* ==============================
+   ホーム画面専用スタイル (リファクタリング版)
+============================== */
+
+/* --- ホーム画面タブ --- */
+.home-tab-container {
+    display: flex;
+    background-color: #ebebebd4;
+    flex-shrink: 0;
+}
+
+.home-tab {
+    flex: 1;
+    padding: 14px 0;
+    text-align: center;
+    background: none;
+    border: none;
+    font-size: 15px;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.2s;
+}
+
+.home-tab:hover {
+    color: #555;
+}
+
+.home-tab.active {
+    color: #333;
+}
+
+/* 選択中のタブの下線 */
+.home-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #333333;
+}
+
+/* --- タブコンテンツの表示制御 --- */
+.tab-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    display: none; /* .active が付与されたものだけ表示 */
+    flex-direction: column;
+    background: #ebebebd4;
+}
+
+.tab-content.active {
+    display: flex;
+}
+
+/* ==============================
+   ウォッチリストタブ / ハッシュタグタブ 共通スタイル
+============================== */
+.watchlist-list, .hashtag-list-container {
+    overflow-y: auto;
+    flex-grow: 1;
+    padding: 10px;
+    background: #ebebebd4;
+}
+
+.watchlist-card {
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.watchlist-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.stock-info {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.stock-info h4 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.stock-info span {
+    font-size: 12px;
+    color: #888;
+}
+
+/* --- 横スクロールコンテナ --- */
+.horizontal-scroll-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    padding: 5px 0 10px 0;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.horizontal-scroll-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, and Opera */
+}
+
+/* 横スクロール内のファクターカードのスタイル調整 */
+.horizontal-scroll-container .factor-card {
+    flex: 0 0 150px; /* カードが縮まず、幅150pxで固定 */
+    padding: 10px;
+    background: #fdfdfd;
+}
+
+.horizontal-scroll-container .factor-card .factor-title {
+    font-size: 12px;
+    white-space: normal;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    overflow: hidden;
+    line-height: 1.4;
+    margin: 0;
+}
+
+/* 横スクロール内のファクターカードの背景色 */
+.horizontal-scroll-container .factor-card.sentiment-positive-bg {
+    background-color: #ffced780;
+}
+.horizontal-scroll-container .factor-card.sentiment-neutral-bg {
+    background-color: #6d6d6d81;
+}
+.horizontal-scroll-container .factor-card.sentiment-negative-bg {
+    background-color: #83adf07a;
+}
+
+
+/* ==============================
+   スレッド画面専用スタイル
+============================== */
+
+/* --- 全体レイアウト --- */
+.leftContainer {
+    width: 100%;
+    transition: width 0.3s ease-in-out;
+    background: #ebebebd4;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+
+/* --- ヘッダー --- */
+.thread-header {
+    display: flex;
+    align-items: center;
+    padding: 6px;
+    border-bottom: 1px solid #ddd;
+    background-color: #f8f8f8;
+    flex-shrink: 0;
+}
+
+.back-button {
+    color: #5e5e5ec9;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.back-button .material-icons {
+    font-size: 24px;
+}
+
+.thread-title-container {
+    margin-left: 10px;
+}
+
+.thread-title-container h2 {
+    margin: 0;
+    font-size: 18px;
+    color: #5e5e5ec9;
+}
+
+.thread-title-container p {
+    margin: 0;
+    font-size: 12px;
+    color: #888;
+}
+
+
+/* --- 詳細ボタン --- */
+.view-details-button {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background-color: transparent;
+    border: 1px solid #5f5f5f;
+    border-radius: 8px;
+    padding: 7px 11px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 10px 10px 0 15px;
+    align-self: flex-start;
+    color: #5f5f5f;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.view-details-button .material-icons {
+    font-size: 18px;
+    color: #5f5f5f;
+}
+
+.view-details-button:hover {
+    background-color: #f7f7f7;
+    color: #333;
+}
+
+.view-details-button:hover .material-icons {
+    color: #333;
+}
+
+
+/* --- ファクターリスト --- */
+.factor-list {
+    overflow-y: auto;
+    flex-grow: 1;
+    padding: 5px 5px 70px 5px;
+}
+
+
+
+.factor-card.active,
+.factor-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.factor-card-header {
+    display: flex;
+    justify-content: space-between; /* ★★★ これを追加 ★★★ */
+    align-items: flex-start;     /* ★★★ これを 'flex-start' に変更 ★★★ */
+    gap: 8px;
+    margin-bottom: 1px;
+    overflow: hidden;
+}
+
+.factor-card-header .user-icon-small {
+    flex-shrink: 0;
+    /* ユーザーアイコンは縮まない */
+}
+
+.user-name {
+    font-size: 13px;
+    font-weight: bold;
+    /* ▼▼▼ ユーザー名を伸縮させ、...で省略表示する設定 ▼▼▼ */
+    flex-grow: 1;
+    flex-shrink: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.post-type-icon {
+    color: #888;
+    flex-shrink: 0;
+    /* 投稿タイプアイコンは縮まない */
+    display: flex;
+    align-items: center;
+}
+
+.post-type-icon .icon-square {
+    font-size: 18px;
+}
+
+/* thread.css のこのスタイルを差し替え */
+
+.factor-card-body .factor-title {
+    margin: 0 0 5px 0;
+    font-size: 14px;
+    color: #222;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* この一行で「...」表示になります */
+}
+
+.factor-card-body .factor-title span {
+    display: inline-block;
+    padding-right: 20px;
+}
+
+.factor-card-body .factor-content {
+    margin: 0;
+    font-size: 12px;
+    color: #666;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* --- ファクターカード内のアクションエリア (統合・修正版) --- */
+.factor-sentiment-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    row-gap: 8px;
+    margin-top: 15px;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+
+.sentiment-group {
+    display: flex;
+    gap: 12px;
+}
+
+.sentiment-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #555;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.sentiment-item:hover {
+    color: #000;
+}
+
+.sentiment-item .material-icons {
+    font-size: 20px;
+}
+
+
+/* --- アイコンの色設定 (修正版) --- */
+.like-button .material-icons {
+    color: #e57373;
+}
+
+.sentiment-positive .material-icons {
+    color: #d32f2f;
+}
+
+/* 赤 */
+.sentiment-neutral .material-icons {
+    color: #757575;
+}
+
+/* 灰色 */
+.sentiment-negative .material-icons {
+    color: #1976d2;
+}
+
+/* 青 */
+
+/* --- 非活性のアイコン設定 --- */
+.sentiment-group.inactive .sentiment-item {
+    cursor: default;
+}
+
+.sentiment-group.inactive .sentiment-item .material-icons {
+    color: #bdbdbd !important;
+}
+
+.sentiment-group.inactive .sentiment-item:hover {
+    color: #555;
+}
+
+/* --- 詳細モーダル --- */
+#detailModalBody {
+    line-height: 1.2;
+}
+
+#detailModalBody .factor-card-header {
+    margin-bottom: 12px;
+}
+
+#detailModalBody .factor-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 12px;
+    white-space: normal;
+    overflow: visible;
+}
+
+#detailModalBody .factor-content {
+    font-size: 14px;
+    color: #333;
+    display: block;
+    -webkit-line-clamp: unset;
+}
+
+#detailModalBody .factor-sentiment-actions {
+    margin-top: 25px;
+    padding-top: 15px;
+}
+
+#factorDetailModal .modal-header {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+
+/* --- ファクターカードの日付 --- */
+.post-date {
+    font-size: 12px;
+    color: #888;
+    flex-shrink: 0;
+    /* 日付は縮まない */
+    white-space: nowrap;
+    /* 日付が改行されるのを防ぐ */
+}
+
+
+/* thread.css に追記 */
+
+/* --- 非公開ファクターのインジケータ（共通） --- */
+.private-indicator {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: #888;
+}
+
+.private-indicator .material-icons {
+    font-size: 14px;
+}
+
+
+

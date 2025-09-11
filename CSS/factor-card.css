@@ -1,0 +1,254 @@
+/* =================================================== */
+/* factor-card.css (部品としてのカードのデザイン)      */
+/* =================================================== */
+
+.factor-card {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 12px;
+    transition: box-shadow 0.3s ease;
+    overflow: hidden; /* 角丸の外にはみ出さないように */
+    cursor: pointer;
+}
+
+.factor-card:hover,
+.factor-card.active {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+
+/* --- カードヘッダー --- */
+/* --- カードヘッダー --- */
+.factor-card-header {
+    display: flex;
+    justify-content: space-between; /* ← 両端に配置する */
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+/* ↓ 以下の2つのスタイル定義を追加 */
+.header-left-content {
+    display: inline-flex; /* ← flex から inline-flex に変更 */
+    align-items: center;
+    gap: 8px;
+    width: auto; /* ← 念のため幅を自動に設定 */
+}
+
+.header-right-controls {
+    flex-shrink: 0; /* 右側要素が縮まないように */
+}
+
+.post-date {
+    font-size: 12px;
+    color: #888;
+    white-space: nowrap;
+}
+
+.post-type-icon {
+    color: #888;
+    display: flex;
+    align-items: center;
+}
+
+.post-type-icon .icon-square {
+    font-size: 18px;
+}
+
+/* 右側のコントロール（コンセンサスボタンなど） */
+.header-right-controls {
+    flex-shrink: 0; /* 右側要素が縮まないように */
+}
+
+
+/* --- カードボディ --- */
+.factor-card-body .factor-title {
+    margin: 0 0 5px 0;
+    font-size: 14px;
+    font-weight: bold;
+    color: #222;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.factor-card-body .factor-content {
+    margin: 0;
+    font-size: 12px;
+    color: #666;
+    line-height: 1.5;
+    /* 3行で省略表示 */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+
+/* --- カードフッター (アクションエリア) --- */
+.factor-sentiment-actions {
+    display: flex;
+    justify-content: flex-end; /* アイコンを右寄せ */
+    align-items: center;
+    margin-top: 15px;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+
+.sentiment-group {
+    display: flex;
+    gap: 12px;
+}
+
+.sentiment-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: #555;
+}
+
+.sentiment-item .material-icons {
+    font-size: 20px;
+    color: #bdbdbd; /* デフォルトは灰色 */
+    transition: color 0.2s ease;
+}
+
+.sentiment-item:hover .material-icons {
+    color: #757575;
+}
+
+/* 選択された時のアイコン色 */
+.sentiment-item.selected .material-icons {
+    /* JavaScriptで .selected を付けた時に色がつくように */
+    color: var(--selected-color, #757575);
+}
+.like-button.selected .material-icons { color: #e57373; }
+.sentiment-positive.selected .material-icons { color: #d32f2f; }
+.sentiment-neutral.selected .material-icons { color: #4caf50; }
+.sentiment-negative.selected .material-icons { color: #1976d2; }
+
+
+
+/* factor-card.css にこのコードを記述 */
+
+/* factor-card.css に記述 */
+
+/* 画像を囲むコンテナのスタイル */
+.factor-card .factor-image-container {
+    max-height: 180px;  /* 画像が表示される領域の最大の高さを設定 */
+    overflow: hidden;     /* コンテナからはみ出た画像を隠す */
+    margin-bottom: 12px;
+    border-radius: 6px;
+    background-color: #f0f0f0; /* 画像読み込み中の背景色 */
+}
+
+/* 画像自体のスタイル */
+.factor-card .factor-image {
+    width: 100%;        /* コンテナの幅いっぱいに表示 */
+    height: 100%;       /* コンテナの高さに合わせる */
+    object-fit: cover;  /* アスペクト比を維持したまま、コンテナを完全に覆う（はみ出た部分はトリミング）*/
+    display: block;
+}
+
+/* 例: factor-card.css の該当セレクタに追加 */
+.factor-card-image img {
+    max-width: 50%; /* 親要素の幅に合わせて最大幅を設定 */
+    height: auto;    /* 幅に合わせて高さを自動調整し、アスペクト比を維持 */
+    display: block;  /* 画像の下に余計なスペースができないようにブロック要素に */
+    object-fit: cover; /* 画像がコンテナを覆うように拡大・縮小し、はみ出た部分は切り取る */
+    max-height: 200px; /* ここで画像の最大高さを指定し、コンテンツエリアを制限 */
+    /* あるいは、固定の高さを設定することも可能 */
+    /* height: 180px; */
+    /* width: 100%; */
+}
+
+/* 必要であれば、画像コンテナにも高さを設定する */
+.factor-card-image {
+    max-height: 200px; /* 親コンテナも高さを制限 */
+    overflow: hidden; /* はみ出た部分を非表示にする */
+    display: flex; /* 必要であれば画像を中央に配置するためにflexboxを使う */
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px; /* 画像の下に適切な余白を追加 */
+}
+
+
+
+
+/* factor-card.css に以下のスタイルを追記します */
+
+/* --- カードフッター --- */
+.factor-card-footer {
+    margin-top: 15px;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+
+/* --- センチメント表示エリア共通 --- */
+.sentiment-actions-interactive,
+.sentiment-actions-display {
+    display: flex;
+    justify-content: flex-end; /* 右寄せにする */
+    align-items: center;
+    gap: 12px; /* アイコン間の隙間 */
+}
+
+/* --- 各センチメントアイテム --- */
+.sentiment-item {
+    display: flex;
+    align-items: center;
+    gap: 4px; /* アイコンと数字の間の隙間 */
+    color: #555;
+    font-size: 12px;
+}
+
+/* --- アイコンのスタイル --- */
+.sentiment-item .material-icons {
+    font-size: 20px;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+/* --- 【ボタン形式】のスタイル --- */
+.sentiment-actions-interactive .sentiment-item {
+    cursor: pointer;
+    padding: 2px;
+}
+
+/* ボタンのデフォルト色 (灰色) */
+.sentiment-actions-interactive .sentiment-item .material-icons {
+    color: #bdbdbd;
+}
+
+/* ボタンホバー時のエフェクト */
+.sentiment-actions-interactive .sentiment-item:hover .material-icons {
+    transform: scale(1.15);
+}
+/* factor-card.css 内の該当箇所を修正します */
+
+/* 選択されたボタンの色 */
+.sentiment-actions-interactive .sentiment-item.selected.sentiment-positive .material-icons {
+    color: #d32f2f; /* 赤 */
+}
+.sentiment-actions-interactive .sentiment-item.selected.sentiment-neutral .material-icons {
+    color: #4CAF50; /* 緑に変更 */
+}
+.sentiment-actions-interactive .sentiment-item.selected.sentiment-negative .material-icons {
+    color: #1976d2; /* 青 */
+}
+
+
+/* 件数表示のアイコンは常に色がつく */
+.sentiment-actions-display .sentiment-positive .material-icons {
+    color: #d32f2f; /* 赤 */
+}
+.sentiment-actions-display .sentiment-neutral .material-icons {
+    color: #4CAF50; /* 緑に変更 */
+}
+.sentiment-actions-display .sentiment-negative .material-icons {
+    color: #1976d2; /* 青 */
+}
+
+.sentiment-actions-display .count {
+    font-weight: bold;
+}
