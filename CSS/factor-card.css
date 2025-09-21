@@ -252,3 +252,60 @@
 .sentiment-actions-display .count {
     font-weight: bold;
 }
+
+
+/* factor-card.css に以下のスタイルを追記 */
+
+/* --- カードヘッダーのレイアウト調整 --- */
+.factor-card-header {
+    display: flex;
+    justify-content: space-between; /* 양쪽 끝으로 정렬 */
+    align-items: center;            /* 수직 중앙 정렬 */
+    gap: 8px;
+    margin-bottom: 12px; /* bodyとの間隔を少し広げる */
+}
+
+/* --- 【追加】投稿者情報エリア --- */
+.author-info {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* アイコンと名前の間のスペース */
+}
+
+.user-icon {
+    font-size: 40px; /* アイコンのサイズ */
+    color: #a0a0a0;   /* アイコンの色 */
+}
+
+.author-details {
+    display: flex;
+    flex-direction: column; /* 名前とIDを縦に並べる */
+}
+
+.user-name {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
+
+.user-id {
+    font-size: 12px;
+    color: #888;
+}
+
+/* --- 【追加】ヘッダー右側のコントロールエリア --- */
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #888;
+}
+
+.options-icon {
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.placeholder-icon {
+    font-size: 100px; /* ← この数値を変更します */
+}

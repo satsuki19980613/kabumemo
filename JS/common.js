@@ -275,20 +275,38 @@ function setupStockSearchModalLogic() {
 /**
  * コンセンサスパネル（右パネル）の開閉ロジック
  */
+/**
+ * コンセンサスパネル（右パネル）の開閉ロジック
+ * [変更点] view_moduleアイコンのクリックにも対応
+ */
 function setupConsensusPanel() {
     const subContainer = document.querySelector('.subContainer');
     if (!subContainer) return;
 
+    // body全体のクリックを監視（イベント委任）
     document.body.addEventListener('click', (event) => {
-        if (event.target.classList.contains('open-consensus-text')) {
+        const target = event.target;
+
+        // --- ▼▼▼ パネルを開く条件をここに追加 ▼▼▼ ---
+
+        // 条件1: 'view_module' アイコンがクリックされた場合
+        const isThemeIcon = target.classList.contains('material-icons') && target.textContent.trim() === 'view_module';
+        // 条件2: '.open-consensus-text' がクリックされた場合
+        const isConsensusText = target.classList.contains('open-consensus-text');
+
+        if ((isThemeIcon && target.closest('.factor-card')) || isConsensusText) {
             subContainer.classList.add('show-right-panel');
         }
-        if (event.target.classList.contains('close-right-panel-button')) {
+
+        // --- ▲▲▲ 変更はここまで ▲▲▲ ---
+
+
+        // パネルを閉じる条件（変更なし）
+        if (target.classList.contains('close-right-panel-button')) {
             subContainer.classList.remove('show-right-panel');
         }
     });
 }
-
 /**
  * 右側パネル（コンセンサス）の銘柄追加「+」ボタンの動作を設定
  */

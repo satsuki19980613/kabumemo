@@ -11,7 +11,7 @@
             <div class="post-type-options-vertical">
                 <label>
                     <input type="radio" name="postType" value="つぶやきメモ" checked>
-                    <span>つぶやきメモ</span>
+                    <span>つぶやき</span>
                     <span class="material-icons info-icon">info_outline</span>
                 </label>
                 <label>
@@ -86,26 +86,34 @@
 
 
 <div class="post-modal-overlay" id="infoModal">
-    <div class="post-modal-content">
-        <div class="modal-header">
-            <h3>メモの種類について</h3>
-            <span class="close-button material-icons">close</span>
+        <div class="post-modal-content">
+            <div class="modal-header">
+                <h3>ファクターの種類について</h3>
+                <span class="close-button material-icons">close</span>
+            </div>
+            <div class="modal-body">
+                <div class="info-section">
+                    <h5 class="info-title">つぶやき</h5>
+                    <p class="info-description">
+                        テキストのみのシンプルな投稿機能です。特定のテーマを設けず、自由な内容を記録・発信できます。
+                    </p>
+                </div>
+                <div class="info-section">
+                    <h5 class="info-title">特定の銘柄について</h5>
+                    <p class="info-description">
+                        特定のテーマ（個別銘柄、為替、指数など）に対し「上がる・変わらず・下がる」の三択で投票を募ることができます。<br>
+                        <b>例：「今日のA社の決算、どう評価する？」</b>
+                    </p>
+                </div>
+                <div class="info-section">
+                    <h5 class="info-title">ニュースやテーマ</h5>
+                    <p class="info-description">
+                        大きなテーマを提示し、他のユーザーにポジティブ・ニュートラル・ネガティブの観点で関連銘柄を挙げてもらう機能です。<br>
+                        <b>例：「#円安メリット銘柄 といえば何？」</b>
+                    </p>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-            <div class="info-section">
-                <h5 class="info-title">つぶやきメモ</h5>
-                <p class="info-description">日々の気づきや相場観など、特定の銘柄やテーマに縛られないシンプルなメモです。</p>
-            </div>
-            <div class="info-section">
-                <h5 class="info-title">特定の銘柄について</h5>
-                <p class="info-description">決算情報やIRニュースなど、一つの銘柄に特化したメモを作成します。対象銘柄を一つ設定できます。</p>
-            </div>
-            <div class="info-section">
-                <h5 class="info-title">ニュースやテーマ</h5>
-                <p class="info-description">「円安」や「半導体業界の動向」など、複数の銘柄に影響する可能性のあるテーマに関するメモです。関連する銘柄を後から複数紐づけることができます。</p>
-            </div>
-        </div>
-    </div>
 </div>
 
 <div class="post-modal-overlay" id="stockSearchModal">

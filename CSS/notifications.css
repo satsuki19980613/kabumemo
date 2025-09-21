@@ -1,0 +1,113 @@
+/* ==============================
+   通知画面専用スタイル
+============================== */
+
+/* --- ヘッダー --- */
+.notifications-header {
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+    background-color: #fff;
+    flex-shrink: 0;
+}
+.notifications-header h2 {
+    margin: 0;
+    font-size: 20px;
+    text-align: center;
+}
+
+/* --- 通知リスト --- */
+.notification-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.notification-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.2s;
+}
+.notification-item:hover {
+    background-color: #f9f9f9;
+}
+
+/* 未読の通知（青い丸） */
+.notification-item.unread::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 6px;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    background-color: #1976d2;
+    border-radius: 50%;
+}
+.notification-item.unread {
+    background-color: #e3f2fd; /* 未読は薄い青背景 */
+}
+
+/* 通知の種類を示すアイコン */
+/* notifications.css の .notification-icon を修正 */
+
+.notification-icon {
+    font-size: 24px;
+    color: #fff;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    flex-shrink: 0;
+
+    /* ▼▼▼ Googleのスタイルを強制的に上書き ▼▼▼ */
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+.notification-icon.like { background-color: #e57373; } /* 赤 */
+.notification-icon.trend-vote { background-color: #757575; } /* 灰色 */
+.notification-icon.link { background-color: #64b5f6; } /* 青 */
+.notification-icon.event { background-color: #81c784; } /* 緑 */
+.notification-icon.follow { background-color: #4fc3f7; } /* 水色 */
+
+/* ユーザーアイコン */
+.notification-item .user-icon-small {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    object-fit: cover;
+}
+/* アイコンがない通知タイプのための調整 */
+.notification-item .notification-icon + .notification-content {
+    width: calc(100% - 36px - 12px);
+}
+.notification-item .notification-icon + .user-icon-small + .notification-content {
+    width: calc(100% - 36px - 36px - 24px);
+}
+
+.notification-content p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #333;
+}
+.notification-content b {
+    font-weight: bold;
+}
+.notification-time {
+    font-size: 12px;
+    color: #888;
+    margin-top: 4px;
+}
+
+/* --- 下部タブバーのアクティブ状態 --- */
+.bottom-tab-bar .tab-item.active .material-icons {
+    color: #333; /* アクティブなタブの色を濃くする */
+}
