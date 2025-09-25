@@ -322,10 +322,9 @@ function setupConsensusAddStockButton() {
 /**
  * 銘柄検索モーダルを開く（必要ならHTMLを読み込む）
  */
-async function openStockSearchModal() {
-    if (!isModalsLoaded) {
-        await loadModals();
-    }
+// common.js 内
+function openStockSearchModal() { // async は不要になります
+    // 上記の if (!isModalsLoaded) { ... } のブロックを全て削除
 
     const stockSearchModal = document.getElementById('stockSearchModal');
     if (stockSearchModal) {
