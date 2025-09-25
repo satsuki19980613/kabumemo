@@ -70,7 +70,7 @@ function openPostModal(cardElement = null) { // asyncは不要に
 
     } else {
         // --- 新規投稿モード ---
-        titleElement.textContent = '新規メモ';
+        titleElement.textContent = '新規投稿';
         step1.style.display = 'block';
         footer1.style.display = 'flex';
         step2.style.display = 'none';
