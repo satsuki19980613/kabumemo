@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国産SNS事業計画書『株メモ』</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        .section-title {
+            @apply text-3xl font-bold text-slate-800 mb-2;
+        }
+
+        .section-subtitle {
+            @apply text-lg text-slate-500 mb-8;
+        }
+
+        .card {
+            @apply bg-white p-6 rounded-lg shadow-md;
+        }
+
+        .pill {
+            @apply inline-block bg-slate-200 text-slate-700 text-xs font-semibold px-3 py-1 rounded-full;
+        }
+
+        .ideal-badge {
+            @apply inline-flex items-center bg-sky-100 text-sky-800 text-xs font-bold px-2.5 py-0.5 rounded-full mr-2;
+        }
+
+        .factor-card {
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .factor-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .factor-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .author-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .user-icon {
+            font-size: 40px;
+            color: #a0a0a0;
+        }
+
+        .author-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .user-id {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #888;
+        }
+
+        .post-date {
+            font-size: 12px;
+        }
+
+        .post-type-icon .material-icons {
+            font-size: 20px;
+        }
+
+        .factor-card-body .factor-title {
+            margin: 0 0 5px 0;
+            font-size: 14px;
+            font-weight: 700;
+            color: #222;
+        }
+
+        .factor-card-body .factor-content {
+            margin: 0;
+            font-size: 12px;
+            color: #666;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .factor-card-footer {
+            margin-top: 15px;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
+
+        .sentiment-actions-display {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .sentiment-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+        }
+
+        .sentiment-item .material-icons {
+            font-size: 20px;
+        }
+
+        .sentiment-positive {
+            color: #d32f2f;
+        }
+
+        .sentiment-neutral {
+            color: #757575;
+        }
+
+        .sentiment-negative {
+            color: #1976d2;
+        }
+
+        .count {
+            font-weight: 700;
+        }
+
+        [data-animate] {
+            opacity: 0;
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        [data-animate="fade-in"] {
+        }
+
+        [data-animate="slide-up"] {
+            transform: translateY(30px);
+        }
+
+        [data-animate="slide-left"] {
+            transform: translateX(-30px);
+        }
+
+        [data-animate="slide-right"] {
+            transform: translateX(30px);
+        }
+
+        [data-animate].is-visible {
+            opacity: 1;
+            transform: translateX(0) translateY(0);
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-600">
+
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <div class="text-xl font-bold text-slate-800">
+                事業計画書『株メモ』
+            </div>
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="#service" class="hover:text-sky-600 transition-colors">サービス概要</a>
+                <a href="#monetize" class="hover:text-sky-600 transition-colors">マネタイズ</a>
+                <a href="#strategy" class="hover:text-sky-600 transition-colors">戦略</a>
+                <a href="#roadmap" class="hover:text-sky-600 transition-colors">計画</a>
+                <a href="#team" class="hover:text-sky-600 transition-colors">体制</a>
+                <a href="#reason" class="hover:text-sky-600 transition-colors">事業をやる理由</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-12 md:py-20">
+
+        <section class="text-center mb-20">
+            <h1 data-animate="slide-up" class="text-4xl md:text-5xl font-bold text-slate-900 mb-4 leading-tight">
+                個人投資家の「集合知」で、<br>健全な投資環境を創造する。
+            </h1>
+            <p data-animate="slide-up" data-delay="100" class="text-lg text-slate-600 max-w-3xl mx-auto">
+                金融特化型SNS『株メモ』の事業計画をご提案します。
+            </p>
+            <p data-animate="slide-up" data-delay="200" class="mt-2 text-sm text-slate-500">提案者：渡邊 颯木</p>
+        </section>
+
+        <section id="service" class="mb-20" data-animate="fade-in">
+            <h3 class="section-title text-2xl font-bold text-slate-800 mb-6 " data-animate="slide-up">1. サービス概要</h3>
+            <p class="section-subtitle" data-animate="slide-up" data-delay="100">投資家が直面する「3つの不」を、プラットフォームの力で解決します。</p>
+
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div data-animate="slide-right">
+                    <div class="space-y-6">
+                        <div class="card">
+                            <h3 class="font-bold text-slate-800 text-lg mb-2">課題：個人投資家を取り巻く「3つの不」</h3>
+                            <ul class="space-y-2 text-sm">
+                                <li class="flex items-start"><span
+                                        class="material-icons text-rose-500 mr-2">error_outline</span>情報の「不」整理：重要情報がネットに散在し、構造的な把握が困難。
+                                </li>
+                                <li class="flex items-start"><span
+                                        class="material-icons text-rose-500 mr-2">error_outline</span>因果関係の「不」明確さ：あるニュースがどの銘柄にどう影響するか直感的に把握しにくい。
+                                </li>
+                                <li class="flex items-start"><span
+                                        class="material-icons text-rose-500 mr-2">error_outline</span>信頼性の「不」足：SNS上の「買い煽り」やノイズが多く、客観的な情報収集が極めて困難。
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h3 class="font-bold text-slate-800 text-lg mb-2">解決策：金融特化型SNS『株メモ』</h3>
+                            <p class="text-sm">ユーザー自身が情報の構造化に参加することで「集合知」を形成し、市場心理を可視化します。</p>
+                            <ul class="mt-4 space-y-2 text-sm">
+                                <li class="flex items-start"><span
+                                        class="material-icons text-sky-500 mr-2">edit_note</span><strong
+                                        class="mr-1">ファクター投稿:</strong> 投資判断材料を記録・投稿し、知識を構造化。</li>
+                                <li class="flex items-start"><span
+                                        class="material-icons text-sky-500 mr-2">monitoring</span><strong
+                                        class="mr-1">センチメント投票:</strong> 市場の温度感をリアルタイムで可視化。</li>
+                                <li class="flex items-start"><span
+                                        class="material-icons text-sky-500 mr-2">hub</span><strong
+                                        class="mr-1">銘柄紐付け:</strong> ニュースと銘柄の因果関係を集合知で蓄積。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 md:mt-0" data-animate="slide-left" data-delay="200">
+                    <p class="text-center font-semibold text-slate-700 mb-2">プロダクトデモ</p>
+                    <p class="text-center text-sm text-slate-500 mb-4">これが『株メモ』の核心となる「ファクターカード」です。</p>
+                    <div class="factor-card max-w-sm mx-auto">
+                        <div class="factor-card-header">
+                            <div class="author-info">
+                                <span class="material-icons user-icon">account_circle</span>
+                                <div class="author-details">
+                                    <span class="user-name">アナリストA</span>
+                                    <span class="user-id">@analyst_a</span>
+                                </div>
+                            </div>
+                            <div class="header-controls">
+                                <span class="post-date">8月1日</span>
+                                <span class="post-type-icon"><span class="material-icons">view_module</span></span>
+                            </div>
+                        </div>
+                        <div class="factor-card-body">
+                            <h4 class="factor-title">日銀、9月会合での追加利上げ観測が後退</h4>
+                            <p class="factor-content"
+                                data-full-content="直近の全国消費者物価指数（CPI）の伸び率が市場予想を下回ったことを受け、日銀が性急な金融引き締めを見送るとの見方が優勢に...">
+                                直近の全国消費者物価指数（CPI）の伸び率が市場予想を下回ったことを受け...</p>
+                        </div>
+                        <div class="factor-card-footer">
+                            <div class="sentiment-actions-display">
+                                <div class="sentiment-item sentiment-positive"><span
+                                        class="material-icons">trending_up</span><span class="count">125</span></div>
+                                <div class="sentiment-item sentiment-neutral"><span
+                                        class="material-icons">trending_flat</span><span class="count">32</span></div>
+                                <div class="sentiment-item sentiment-negative"><span
+                                        class="material-icons">trending_down</span><span class="count">18</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-center text-slate-500 mt-4">※ 上記は静的な表示例です。</p>
+                    <div class="text-center mt-4">
+                        <a href="HTML/home.html" target="_blank"
+                            class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 transition-transform transform hover:scale-105">
+                            <span class="material-icons mr-2">smart_display</span>
+                            モックを操作する
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 card bg-slate-100 border border-slate-200" data-animate="slide-up" data-delay="300">
+                <h3 class="font-bold text-slate-800 text-lg mb-3">サービスを支える基本原則</h3>
+                <div class="grid md:grid-cols-3 gap-6 text-sm">
+                    <div>
+                        <p class="font-semibold text-slate-700 mb-1">1. ユーザーとの共創</p>
+                        <p><span class="ideal-badge">条件1</span>貢献度に応じて株式を付与し、PFの成長とユーザーの利益が一致するエコシステムを構築します。</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-slate-700 mb-1">2. 信頼性の担保</p>
+                        <p><span class="ideal-badge">条件2</span>厳格な本人確認を必須とし、無責任な発言や「買い煽り」を抑止。信頼性の高いコミュニティを築きます。</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-slate-700 mb-1">3. 健全な場の提供</p>
+                        <p><span class="ideal-badge">条件5</span>AIとコミュニティの力で、誹謗中傷やデマのない、誰もが安心して利用できる情報空間を維持します。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="monetize" class="mb-20" data-animate="fade-in">
+            <div class="grid md:grid-cols-2 gap-8">
+                <div data-animate="slide-up">
+                    <h2 class="section-title text-2xl font-bold text-slate-800 mb-6 ">2. ターゲットユーザー</h2>
+                    <p class="section-subtitle">客観的な情報を求める、すべての個人投資家へ。</p>
+                    <div class="card space-y-4">
+
+                        <p class="font-semibold text-slate-800">特に解決したい課題を持つ層</p>
+                        <ul class="list-disc list-inside text-sm space-y-2">
+                            <li>SNSやニュースの情報が玉石混交で、客観的な判断材料を探しているユーザー。</li>
+                            <li>市場全体のセンチメント（市場心理）を把握したいユーザー。</li>
+                            <li>自身の投資アイデアを多角的に検証したいユーザー。</li>
+                        </ul>
+                    </div>
+                </div>
+                <div data-animate="slide-up" data-delay="200">
+                    <h2 class="section-title text-2xl font-bold text-slate-800 mb-6 ">3. マネタイズモデル</h2>
+                    <p class="section-subtitle">持続可能な運営と健全性を両立させる収益構造。</p>
+                    <div class="card space-y-4">
+                        <div>
+                            <p class="font-semibold text-slate-800 mb-1">主要収益源：プレミアム広告</p>
+                            <p class="text-sm"><span
+                                    class="ideal-badge">条件4</span>PFの理念に反する詐欺・誇大広告は掲載せず、信頼性の高い証券会社やIR広告などに限定。ユーザー体験を損なわないネイティブ広告として配信します。
+                            </p>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-slate-800 mb-1">付加価値収益：センチメント・アナリティクス（月額課金）</p>
+                            <p class="text-sm">ユーザーが生み出した「集合知」を、より高度な分析機能として提供。特定テーマの「総合センチメント比率」や時系列データを月額300円程度で公開します。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="strategy" class="mb-20" data-animate="fade-in">
+            <h2 class="section-title text-2xl font-bold text-slate-800 mb-6 " data-animate="slide-up">4. ユーザー獲得・拡大戦略
+            </h2>
+            <p class="section-subtitle" data-animate="slide-up" data-delay="100">信頼性とインセンティブで、オーガニックな成長を目指します。</p>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="card" data-animate="slide-up" data-delay="200">
+                    <p class="font-semibold text-slate-800 mb-2">Phase 1: 初期ユーザー獲得</p>
+                    <ul class="list-disc list-inside text-sm space-y-2">
+                        <li>インフルエンサー・マーケティング: 信頼性の高い投資家や経済系インフルエンサーに先行利用を依頼し、アーリーアダプター層にアプローチ。</li>
+                        <li>コンテンツ・マーケティング: 「投資情報の新しい整理術」等のテーマで情報発信し、検索エンジン経由での流入を促進。</li>
+                    </ul>
+                </div>
+                <div class="card" data-animate="slide-up" data-delay="300">
+                    <p class="font-semibold text-slate-800 mb-2">Phase 2: ユーザー拡大</p>
+                    <ul class="list-disc list-inside text-sm space-y-2">
+                        <li> ユーザー共創インセンティブ: <span
+                                class="ideal-badge">条件1</span>PFへの貢献（良質な投稿等）を評価し株式を付与。「使うほど自分の資産になる」という強力な招待インセンティブで拡大を促進。
+                        </li>
+                        <li> コミュニティ活性化: 優れた分析を行ったユーザーを表彰するイベント等を開催し、エンゲージメントを向上。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-12" data-animate="slide-up" data-delay="200">
+                <h3 class="text-2xl font-bold text-slate-800 mb-6 text-center">5. 競合分析と差別化ポイント</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left text-slate-500">
+                        <thead class="text-xs text-slate-700 uppercase bg-slate-100">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">競合</th>
+                                <th scope="col" class="px-6 py-3">弱み</th>
+                                <th scope="col" class="px-6 py-3">『株メモ』の差別化ポイント</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="bg-white border-b" data-animate="fade-in">
+                                <th scope="row" class="px-6 py-4 font-medium text-slate-900 whitespace-nowrap">X
+                                    (旧Twitter)</th>
+                                <td class="px-6 py-4">情報が玉石混交、買い煽りなどノイズが多い、匿名性が高く無責任</td>
+                                <td class="px-6 py-4"><strong class="text-sky-600">【信頼性】</strong><span
+                                        class="ideal-badge">条件2</span>全員本人確認により情報の信頼性と議論の質で差別化。<br><strong
+                                        class="text-sky-600">【構造化】</strong>センチメントで情報が構造化され、本質を探しやすい。</td>
+                            </tr>
+                            <tr class="bg-white border-b" data-animate="fade-in" data-delay="100">
+                                <th scope="row" class="px-6 py-4 font-medium text-slate-900 whitespace-nowrap">
+                                    Yahoo!ファイナンス掲示板</th>
+                                <td class="px-6 py-4">UIが古い、感情的な投稿が多く客観的データに乏しい</td>
+                                <td class="px-6 py-4"><strong
+                                        class="text-sky-600">【データ活用】</strong>感情的な意見をセンチメント投票により<strong
+                                        class="text-slate-700">定量データ</strong>として可視化。</td>
+                            </tr>
+                            <tr class="bg-white" data-animate="fade-in" data-delay="200">
+                                <th scope="row" class="px-6 py-4 font-medium text-slate-900 whitespace-nowrap">
+                                    有料投資サロン/note</th>
+                                <td class="px-6 py-4">クローズドな環境、高額な場合が多い</td>
+                                <td class="px-6 py-4"><strong
+                                        class="text-sky-600">【オープンな集合知】</strong>専門家の意見ではなく、多様な投資家の<strong
+                                        class="text-slate-700">「集合知」</strong>を形成する点で全く異なる価値を提供。</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="team" class="mb-20" data-animate="fade-in">
+            <h2 class="section-title text-2xl font-bold text-slate-800 mb-6 " data-animate="slide-up">7. 必要な体制及びご自身の役割</h2>
+            <p class="section-subtitle" data-animate="slide-up" data-delay="100">チームでビジョンを共有し、それぞれの専門性を活かして事業を推進します。</p>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="card" data-animate="slide-up" data-delay="200">
+                    <p class="font-semibold text-slate-800 mb-2">事業推進に必要なチーム体制</p>
+                    <ul class="list-disc list-inside text-sm space-y-2">
+                        <li><strong>プロジェクトマネージャー (1名):</strong> 新規事業立ち上げ経験が豊富なリーダー。</li>
+                        <li><strong>発案者 / プロダクト企画担当 (私):</strong> 本企画のビジョンを推進し、仕様やUXを設計。</li>
+                        <li><strong>エンジニア (1〜10名):</strong> 開発を担当する技術の専門家。</li>
+                        <li><strong>顧問/アドバイザー :</strong> 法律、セキュリティの専門家。</li>
+                    </ul>
+                </div>
+                <div class="card" data-animate="slide-up" data-delay="300">
+                    <p class="font-semibold text-slate-800 mb-2">私の役割とチームへの貢献</p>
+                    <ul class="list-disc list-inside text-sm space-y-2">
+                        <li>業務経験はまだ浅いですが、本事業の発案者として、誰よりも強い情熱と課題への深い理解があります。</li>
+                        <li>課題の当事者として、ユーザーが本当に求める機能や体験を具体的に企画し、チームに共有します。</li>
+                        <li>経験豊富なリーダーのもとでチームの一員として貢献し、このビジョンの実現に全力を尽くしたいと考えています。</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="reason" class="text-center bg-white py-20 rounded-lg shadow-inner" data-animate="fade-in">
+            <h2 class="section-title text-2xl font-bold text-slate-800 mb-6 " data-animate="slide-up">8. 私がこの事業をやる理由</h2>
+            <div class="max-w-3xl mx-auto mt-6 space-y-4" data-animate="slide-up" data-delay="100">
+                <p>はじめまして、渡邊颯木と申します。</p>
+                <p>2023年に株式投資を始めて以来、情報の海の中で個人投資家がいかに無力であるかを痛感してまいりました。特にSNS上には、特定の銘柄を過度に推奨する「買い煽り」が溢れ、客観的な情報を得ることが極めて難しいのが現状です。
+                </p>
+                <p>しかし、私はSNSが持つ「集合知」の可能性を信じています。必要なのは、極端な意見やノイズを排し、多角的で建設的な視点を集めるための「仕組み」です。</p>
+                <p class="font-semibold text-slate-800">今回私が提案する『株メモ』は、まさにその「仕組み」を実装するものです。</p>
+                <p>この仕組みが、一つの情報に対する多様な意見を可視化し、投資家が偏った情報に惑わされることなく、より客観的な判断を下す一助となると確信しております。</p>
+                <p>私は現職で開発に携わる中で、アイデアを形にする「ものづくり」への情熱を育んでまいりました。実務経験はまだ多くはありませんが、この課題を解決したいという強い当事者意識と、課題解決のためのアイデアを出す情熱は、誰にも負けないと自負しております。
+                </p>
+                <p>この事業にご理解を賜り、日本の投資環境をより健全で豊かなものにする挑戦をご一緒させていただけますと幸いです。何卒、よろしくお願い申し上げます。</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-800 text-slate-400 text-center py-6 mt-20">
+        <p class="text-sm">&copy; 2025 Soki Watanabe. All Rights Reserved.</p>
+        <p class="text-xs mt-1">事業計画書『株メモ』</p>
+    </footer>
+
+    <script>
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Scroll animation observer
+        document.addEventListener("DOMContentLoaded", () => {
+            const animatedElements = document.querySelectorAll('[data-animate]');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const delay = parseInt(entry.target.dataset.delay || 0);
+                        setTimeout(() => {
+                            entry.target.classList.add('is-visible');
+                        }, delay);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            animatedElements.forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+
+</html>

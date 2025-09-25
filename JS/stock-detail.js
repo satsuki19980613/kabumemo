@@ -19,27 +19,24 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-/**
- * 機能：factor-card.htmlからファクターカードを読み込み、リストに表示する
- */
-async function loadStockFactorCards() {
+// stock-detail.js 内の loadStockFactorCards 関数を置き換え
+function loadStockFactorCards() { // async は不要に
     try {
-        const response = await fetch('../HTML/factor-card.html');
-        if (!response.ok) throw new Error('factor-card.htmlの読み込みに失敗しました。');
-        const templateText = await response.text();
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = templateText;
+        // HTMLからテンプレートを取得
+        const template = document.getElementById('factor-card-template');
+        if (!template) throw new Error('factor-card-template が見つかりません。');
 
-        const factorCards = tempDiv.querySelectorAll('.factor-card');
+        const factorCards = template.content.querySelectorAll('.factor-card');
         const listContainer = document.querySelector('.factor-list');
         if (!listContainer) return;
 
         listContainer.innerHTML = ''; // コンテナを一度空にする
         factorCards.forEach(card => {
-            listContainer.appendChild(card);
+            const clonedCard = card.cloneNode(true);
+            listContainer.appendChild(clonedCard);
             // 動的に追加したカード内のセンチメントアイコンにもクリックイベントを設定
             if (typeof setupSentimentInteractions === 'function') {
-                setupSentimentInteractions(card);
+                setupSentimentInteractions(clonedCard);
             }
         });
     } catch (error) {

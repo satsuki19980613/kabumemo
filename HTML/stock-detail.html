@@ -12,7 +12,342 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic&display=swap" rel="stylesheet">
 </head>
+<template id="factor-card-template">
+    <div>
+        <div class="component-wrapper">
+            <div class="factor-card" data-card-type="memo">
+                <div class="factor-card-header">
+                    <div class="author-info">
+                        <span class="material-icons user-icon">account_circle</span>
+                        <div class="author-details">
+                            <span class="user-name">ユーザー名</span>
+                            <span class="user-id">@username</span>
+                        </div>
+                    </div>
+                    <div class="header-left-content">
+                        <span class="post-date">8月1日</span>
+                        <span class="post-type-icon" title="ニュースやテーマ">
+                            <span class="material-icons">chat_bubble_outline</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="factor-card-body">
+                    <div class="factor-image-container placeholder-container">
+                        <span class="material-icons placeholder-icon">image</span>
+                    </div>
+                    <p class="factor-content"
+                        data-full-content="今日の市場は全体的に軟調だったが、半導体セクターの一角には資金流入が見られた。特に〇〇の動きが興味深い。このチャートのパターンは注目しておきたい。">
+                        今日の市場は全体的に軟調だったが、半導体セクターの一角には資金流入が見られた。特に〇〇の動きが興味深い...
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="component-wrapper">
+            <div class="factor-card" data-card-type="memo">
+                <div class="factor-card-header">
+                    <div class="author-info">
+                        <span class="material-icons user-icon">account_circle</span>
+                        <div class="author-details">
+                            <span class="user-name">ユーザー名</span>
+                            <span class="user-id">@username</span>
+                        </div>
+                    </div>
+                    <div class="header-left-content">
+                        <span class="post-date">8月1日</span>
+                        <span class="post-type-icon" title="ニュースやテーマ">
+                            <span class="material-icons">chat_bubble_outline</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="factor-card-body">
+                    <p class="factor-content"
+                        data-full-content="直近の全国消費者物価指数（CPI）の伸び率が市場予想を下回ったことを受け、日銀が性急な金融引き締めを見送るとの見方が優勢になっています。市場関係者の間では、次回会合での現状維持がコンセンサスとなりつつあります。">
+                        直近の全国消費者物価指数（CPI）の伸び率が市場予想を下回ったことを受け、日銀が性急な金融引き締めを見送るとの見方が優勢に...
+                    </p>
+                </div>
+            </div>
+        </div>
 
+        <div class="component-wrapper">
+            <div class="factor-card" data-card-type="theme">
+                <div class="factor-card-header">
+                    <div class="author-info">
+                        <span class="material-icons user-icon">account_circle</span>
+                        <div class="author-details">
+                            <span class="user-name">ユーザー名</span>
+                            <span class="user-id">@username</span>
+                        </div>
+                    </div>
+                    <div class="header-left-content">
+                        <span class="post-date">8月1日</span>
+                        <span class="post-type-icon" title="ニュースやテーマ">
+                            <span class="material-icons">view_module</span>
+                        </span>
+                    </div>
+
+                </div>
+                <div class="factor-card-body">
+                    <h4 class="factor-title">日銀、9月会合での追加利上げ観測が後退</h4>
+                    <p class="factor-content"
+                        data-full-content="直近の全国消費者物価指数（CPI）の伸び率が市場予想を下回ったことを受け、日銀が性急な金融引き締めを見送るとの見方が優勢になっています。市場関係者の間では、次回会合での現状維持がコンセンサスとなりつつあります。">
+                        直近の全国消費者物価指数（CPI）の伸び率が市場予想を下回ったことを受け、日銀が性急な金融引き締めを見送るとの見方が優勢に...
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="component-wrapper">
+            <div class="factor-card" data-card-type="stock">
+                <div class="factor-card-header">
+                    <div class="author-info">
+                        <span class="material-icons user-icon">account_circle</span>
+                        <div class="author-details">
+                            <span class="user-name">ユーザー名</span>
+                            <span class="user-id">@username</span>
+                        </div>
+                    </div>
+                    <div class="header-left-content">
+                        <span class="post-date">8月1日</span>
+                        <span class="post-type-icon" title="ニュースやテーマ">
+                            <span class="material-icons">square</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="factor-card-body">
+                    <h4 class="factor-title">[決算] A社、第2四半期決算は予想を上回る</h4>
+                    <p class="factor-content"
+                        data-full-content="A社の決算内容は市場のコンセンサスを上回るポジティブな内容だった。特に、新規事業の収益性が改善しており、今後の成長ドライバーとして期待できる。">
+                        A社の決算内容は市場のコンセンサスを上回るポジティブな内容だった。特に、新規事業の収益性が改善しており、今後の成長ドライバーとして期待できる。
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="factor-card" data-card-type="stock">
+            <div class="factor-card-header">
+                <div class="author-info">
+                    <span class="material-icons user-icon">account_circle</span>
+                    <div class="author-details">
+                        <span class="user-name">ユーザー名</span>
+                        <span class="user-id">@username</span>
+                    </div>
+                </div>
+                <div class="header-left-content">
+                    <span class="post-date">8月1日</span>
+                    <span class="post-type-icon" title="ニュースやテーマ">
+                        <span class="material-icons">square</span>
+                    </span>
+                </div>
+            </div>
+            <div class="factor-card-body">
+                <h4 class="factor-title">[決算] A社、第2四半期決算は予想を上回る</h4>
+                <p class="factor-content"
+                    data-full-content="A社の決算内容は市場のコンセンサスを上回るポジティブな内容だった。特に、新規事業の収益性が改善しており、今後の成長ドライバーとして期待できる。">
+                    A社の決算内容は市場のコンセンサスを上回るポジティブな内容だった...
+                </p>
+            </div>
+
+            <div class="factor-card-footer">
+                <div class="sentiment-actions-interactive">
+                    <div class="sentiment-item sentiment-positive" title="上昇"><span
+                            class="material-icons">trending_up</span></div>
+                    <div class="sentiment-item sentiment-neutral" title="横ばい"><span
+                            class="material-icons">trending_flat</span></div>
+                    <div class="sentiment-item sentiment-negative" title="下落"><span
+                            class="material-icons">trending_down</span></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="factor-card" data-card-type="theme">
+            <div class="factor-card-header">
+                <div class="author-info">
+                    <span class="material-icons user-icon">account_circle</span>
+                    <div class="author-details">
+                        <span class="user-name">ユーザー名</span>
+                        <span class="user-id">@username</span>
+                    </div>
+                </div>
+                <div class="header-left-content">
+                    <span class="post-date">8月1日</span>
+                    <span class="post-type-icon" title="ニュースやテーマ"><span class="material-icons">view_module</span></span>
+                </div>
+
+            </div>
+            <div class="factor-card-body">
+                <h4 class="factor-title">日銀、9月会合での追加利上げ観測が後退</h4>
+                <p class="factor-content"
+                    data-full-content="直近の全国消費者物価指数（CPI）の伸び率が市場予想を下回ったことを受け、日銀が性急な金融引き締めを見送るとの見方が優勢に...">
+                    直近の全国消費者物価指数（CPI）の伸び率が市場予想を下回ったことを受け...
+                </p>
+            </div>
+            <div class="factor-card-footer">
+                <div class="sentiment-actions-display">
+                    <div class="sentiment-item sentiment-positive"><span class="material-icons">trending_up</span><span
+                            class="count">125</span></div>
+                    <div class="sentiment-item sentiment-neutral"><span class="material-icons">trending_flat</span><span
+                            class="count">32</span></div>
+                    <div class="sentiment-item sentiment-negative"><span
+                            class="material-icons">trending_down</span><span class="count">18</span></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</template>
+
+<div class="post-modal-overlay" id="postModal">
+    <div class="post-modal-content">
+        <div class="modal-header">
+            <span class="back-to-step1-button material-icons" style="display: none;">arrow_back_ios</span>
+            <h3 id="post-modal-title">新規メモ</h3>
+            <span class="close-button material-icons">close</span>
+        </div>
+
+        <div class="modal-body modal-step" id="modal-step1">
+            <h4 class="modal-step-title">メモの種類を選択してください</h4>
+            <div class="post-type-options-vertical">
+                <label>
+                    <input type="radio" name="postType" value="つぶやきメモ" checked>
+                    <span>つぶやき</span>
+                    <span class="material-icons info-icon">info_outline</span>
+                </label>
+                <label>
+                    <input type="radio" name="postType" value="個別銘柄メモ">
+                    <span>特定の銘柄について</span>
+                    <span class="material-icons info-icon">info_outline</span>
+                </label>
+                <label>
+                    <input type="radio" name="postType" value="テーマメモ">
+                    <span>ニュースやテーマ</span>
+                    <span class="material-icons info-icon">info_outline</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="modal-body modal-step" id="modal-step2" style="display: none;">
+
+            <div class="post-editor-container">
+                <div id="editorTitle" contenteditable="true" class="post-editor-title" placeholder="タイトルを入力"></div>
+                <div id="editorContent" contenteditable="true" class="post-editor-content" placeholder="内容を入力..."></div>
+            </div>
+
+            <div class="form-group" id="targetStockContainer" style="display: none;">
+                <label>対象銘柄</label>
+                <div class="factor-target-container">
+                    <span id="targetStockName" class="target-name">未選択</span>
+                    <button type="button" class="modal-btn select-target-button">銘柄を選択</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="factorHashtagInput">ハッシュタグ</label>
+                <div class="multi-hashtag-container">
+                    <div id="hashtag-tags-container" class="hashtag-tags-container"></div>
+                    <input type="text" id="factorHashtagInput" placeholder="入力後 Enter で追加">
+                </div>
+            </div>
+
+            <div class="form-group-toggle">
+                <label>
+                    <input type="checkbox" id="togglePeriodSetting">
+                    <span>影響期間を設定する</span>
+                </label>
+            </div>
+            <div class="period-setting-container" style="display: none;">
+                <input type="date" id="factor-period-start">
+                <span class="period-separator">〜</span>
+                <input type="date" id="factor-period-end">
+            </div>
+
+            <div class="form-group">
+                <label for="factorImageUpload" class="image-upload-label">
+                    <span class="material-icons">add_photo_alternate</span>
+                    <span>画像を追加</span>
+                </label>
+                <input type="file" id="factorImageUpload" accept="image/*" style="display: none;">
+                <div id="imagePreviewContainer" class="image-preview-container" style="display: none;">
+                    <img id="imagePreview" src="#" alt="プレビュー">
+                    <button type="button" id="removeImageBtn" class="remove-image-btn">
+                        <span class="material-icons">cancel</span>
+                    </button>
+                </div>
+            </div>
+            </div> <div class="modal-footer" id="footer-step1">
+            <button class="modal-btn" id="next-button">次へ</button>
+        </div>
+        <div class="modal-footer" id="footer-step2" style="display: none;">
+            <button class="modal-btn" id="save-button">保存</button>
+        </div>
+    </div>
+</div>
+
+
+<div class="post-modal-overlay" id="infoModal">
+        <div class="post-modal-content">
+            <div class="modal-header">
+                <h3>ファクターの種類について</h3>
+                <span class="close-button material-icons">close</span>
+            </div>
+            <div class="modal-body">
+                <div class="info-section">
+                    <h5 class="info-title">つぶやき</h5>
+                    <p class="info-description">
+                        テキストのみのシンプルな投稿機能です。特定のテーマを設けず、自由な内容を記録・発信できます。
+                    </p>
+                </div>
+                <div class="info-section">
+                    <h5 class="info-title">特定の銘柄について</h5>
+                    <p class="info-description">
+                        特定のテーマ（個別銘柄、為替、指数など）に対し「上がる・変わらず・下がる」の三択で投票を募ることができます。<br>
+                        <b>例：「今日のA社の決算、どう評価する？」</b>
+                    </p>
+                </div>
+                <div class="info-section">
+                    <h5 class="info-title">ニュースやテーマ</h5>
+                    <p class="info-description">
+                        大きなテーマを提示し、他のユーザーにポジティブ・ニュートラル・ネガティブの観点で関連銘柄を挙げてもらう機能です。<br>
+                        <b>例：「#円安メリット銘柄 といえば何？」</b>
+                    </p>
+                </div>
+            </div>
+        </div>
+</div>
+
+<div class="post-modal-overlay" id="stockSearchModal">
+    <div class="post-modal-content">
+        <div class="modal-header">
+            <h3>銘柄を検索</h3>
+            <span class="close-button material-icons">close</span>
+        </div>
+        <div class="modal-body">
+            <div class="search-box-container">
+                <span class="material-icons">search</span>
+                <input type="search" placeholder="銘柄名・証券コードで検索">
+            </div>
+            <ul class="stock-search-results">
+                <li class="result-item stock-item" data-stock-name="トヨタ自動車" data-stock-code="7203">
+                    <div class="item-content">
+                        <p class="item-title">トヨタ自動車</p>
+                        <p class="item-snippet">7203 / プライム市場</p>
+                    </div>
+                </li>
+                <li class="result-item stock-item" data-stock-name="ソニーグループ" data-stock-code="6758">
+                    <div class="item-content">
+                        <p class="item-title">ソニーグループ</p>
+                        <p class="item-snippet">6758 / プライム市場</p>
+                    </div>
+                </li>
+                <li class="result-item stock-item" data-stock-name="任天堂" data-stock-code="7974">
+                    <div class="item-content">
+                        <p class="item-title">任天堂</p>
+                        <p class="item-snippet">7974 / プライム市場</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
 <body>
 
     <div class="main-content">

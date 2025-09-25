@@ -31,20 +31,30 @@ document.addEventListener('DOMContentLoaded', () => {
 /**
  * 機能：factor-card.htmlからファクターカードを読み込み、「メモ」タブに表示する
  */
-async function loadMemoCards() {
+// 修正後のコード
+function loadMemoCards() { // asyncは不要になります
     try {
-        const response = await fetch('../HTML/factor-card.html');
-        if (!response.ok) throw new Error('factor-card.htmlの読み込みに失敗しました。');
+        // 1. HTMLに埋め込んだ<template>要素を取得します
+        const template = document.getElementById('factor-card-template');
+        if (!template) {
+            throw new Error('factor-card-templateがHTML内に見つかりません。');
+        }
 
-        const templateText = await response.text();
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = templateText;
+        // 2. テンプレートの「中身」から、.factor-card要素を全て取得します
+        const factorCards = template.content.querySelectorAll('.factor-card');
+        if (factorCards.length === 0) {
+            throw new Error('.factor-cardがテンプレート内に見つかりません。');
+        }
 
-        const factorCards = tempDiv.querySelectorAll('.factor-card');
+        // 3. カードを追加する先のコンテナ要素を取得します
         const memoListContainer = document.querySelector('#memo .factor-list');
         if (!memoListContainer) return;
 
+        // 4. コンテナを一度空にします
         memoListContainer.innerHTML = '';
+
+        // 5. テンプレートから取得したカードを一つずつ複製してコンテナに追加します
+        //    (この部分は元のコードと全く同じです)
         factorCards.forEach(cardNode => {
             memoListContainer.appendChild(cardNode.cloneNode(true));
         });
@@ -58,19 +68,13 @@ async function loadMemoCards() {
     }
 }
 
-/**
- * 機能：factor-card.htmlからファクターカードを読み込み、「ウォッチリスト」タブに簡易表示する
- */
-async function loadWatchlistCards() {
+// home.js 内
+function loadWatchlistCards() { // asyncは不要に
     try {
-        const response = await fetch('../HTML/factor-card.html');
-        if (!response.ok) throw new Error('factor-card.htmlの読み込みに失敗しました。');
+        const template = document.getElementById('factor-card-template');
+        if (!template) throw new Error('factor-card-templateが見つかりません。');
 
-        const templateText = await response.text();
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = templateText;
-
-        const factorCards = tempDiv.querySelectorAll('.factor-card');
+        const factorCards = template.content.querySelectorAll('.factor-card');
         const watchlistContainer = document.querySelector('#watchlist .horizontal-scroll-container');
         if (!watchlistContainer) return;
 
@@ -85,29 +89,20 @@ async function loadWatchlistCards() {
     }
 }
 
-
 /**
  * 機能：factor-card.htmlからファクターカードを読み込み、「ハッシュタグ」タブに簡易表示する
  */
-async function loadHashtagCards() {
+function loadHashtagCards() { // asyncは不要に
     try {
-        const response = await fetch('../HTML/factor-card.html');
-        if (!response.ok) throw new Error('factor-card.htmlの読み込みに失敗しました。');
+        const template = document.getElementById('factor-card-template');
+        if (!template) throw new Error('factor-card-templateが見つかりません。');
 
-        const templateText = await response.text();
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = templateText;
-
-        const factorCards = tempDiv.querySelectorAll('.factor-card');
-        // ハッシュタグタブ内の、すべての横スクロールコンテナを取得
+        const factorCards = template.content.querySelectorAll('.factor-card');
         const hashtagContainers = document.querySelectorAll('#hashtags .horizontal-scroll-container');
         if (hashtagContainers.length === 0) return;
 
-        // 各ハッシュタグカードのコンテナに対して処理を行う
         hashtagContainers.forEach(container => {
-            container.innerHTML = ''; // 中身を一度空にする
-
-            // factor-card.htmlから読み込んだ全カードを複製して追加
+            container.innerHTML = '';
             factorCards.forEach(cardNode => {
                 container.appendChild(cardNode.cloneNode(true));
             });
@@ -117,7 +112,6 @@ async function loadHashtagCards() {
         console.error('ハッシュタグカードの読み込み中にエラーが発生しました:', error);
     }
 }
-
 
 /**
  * 機能：ホーム画面のタブ切り替え

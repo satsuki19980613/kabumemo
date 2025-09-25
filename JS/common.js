@@ -9,10 +9,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // ▼▼▼ 不足していた初期化処理を追加 ▼▼▼
     setupConsensusAddStockButton();
     setupInteractiveSentimentControls();
+    setupModalInternals(); // ← これを追加
+
 });
 
-// --- グローバル変数 ---
-let isModalsLoaded = false; // モーダルが一度読み込まれたかを管理するフラグ
 
 /**
  * FABボタン（+ボタン）のクリックイベントを設定
@@ -30,12 +30,11 @@ function setupFabInteraction() {
  * 新規投稿／編集モーダルを開く関数
  * @param {HTMLElement} [cardElement=null] - 編集対象カード。nullの場合は新規モード。
  */
-async function openPostModal(cardElement = null) {
-    if (!isModalsLoaded) {
-        await loadModals();
-    }
+// common.js 内
+function openPostModal(cardElement = null) { // asyncは不要に
+    // 上記の if (!isModalsLoaded) { ... } のブロックを削除
     const postModal = document.getElementById('postModal');
-    if (!postModal) return;
+    // ...
 
     const titleElement = postModal.querySelector('#post-modal-title');
     const step1 = postModal.querySelector('#modal-step1');
@@ -60,10 +59,10 @@ async function openPostModal(cardElement = null) {
 
         const cardTitle = cardElement.querySelector('.factor-title')?.textContent || '';
         const cardFullContent = cardElement.querySelector('.factor-content').dataset.fullContent || cardElement.querySelector('.factor-content').textContent;
-        
+
         editorTitle.textContent = cardTitle;
         editorContent.textContent = cardFullContent;
-        
+
         saveButton.onclick = () => {
             handleSave(editorTitle.textContent, editorContent.textContent);
             postModal.classList.remove('active');
@@ -78,7 +77,7 @@ async function openPostModal(cardElement = null) {
         footer2.style.display = 'none';
         backButton.style.display = 'none';
         saveButton.textContent = '保存';
-        
+
         editorTitle.textContent = '';
         editorContent.textContent = '';
 
@@ -107,7 +106,7 @@ async function openPostModal(cardElement = null) {
 function handleSave(title, content) {
     const finalTitle = title.trim();
     const finalContent = content.trim();
-    
+
     console.log("保存されるタイトル:", finalTitle);
     console.log("保存される内容:", finalContent);
     alert(`保存します：\nタイトル: ${finalTitle}\n内容: ${finalContent.substring(0, 30)}...`);
@@ -122,7 +121,7 @@ async function loadModals() {
         if (!response.ok) throw new Error('モーダルファイルの読み込みに失敗');
         const modalHtml = await response.text();
         document.body.insertAdjacentHTML('beforeend', modalHtml);
-        
+
         setupModalInternals();
         isModalsLoaded = true;
     } catch (error) {
@@ -156,7 +155,7 @@ function setupMultiStepPostModalLogic() {
     const step2 = postModal.querySelector('#modal-step2');
     const footer1 = postModal.querySelector('#footer-step1');
     const footer2 = postModal.querySelector('#footer-step2');
-    
+
     const resetToStep1 = () => {
         step2.style.display = 'none';
         footer2.style.display = 'none';
@@ -245,7 +244,7 @@ function setupStockSearchModalLogic() {
     const stockSearchModal = document.getElementById('stockSearchModal');
     const postModal = document.getElementById('postModal');
     if (!stockSearchModal || !postModal) return;
-    
+
     // 投稿モーダル内の「銘柄を選択」ボタン
     const triggerButton = postModal.querySelector('.select-target-button');
     if (!triggerButton) return;
@@ -311,7 +310,7 @@ function setupConsensusPanel() {
  * 右側パネル（コンセンサス）の銘柄追加「+」ボタンの動作を設定
  */
 function setupConsensusAddStockButton() {
-    document.addEventListener('click', function(event) {
+    document.addEventListener('click', function (event) {
         const button = event.target.closest('.add-stock-button');
         if (button) {
             event.stopPropagation();
@@ -327,7 +326,7 @@ async function openStockSearchModal() {
     if (!isModalsLoaded) {
         await loadModals();
     }
-    
+
     const stockSearchModal = document.getElementById('stockSearchModal');
     if (stockSearchModal) {
         stockSearchModal.classList.add('active');
@@ -340,11 +339,11 @@ async function openStockSearchModal() {
  * インタラクティブなセンチメントボタンのクリックイベントを設定する
  */
 function setupInteractiveSentimentControls() {
-    document.body.addEventListener('click', function(event) {
+    document.body.addEventListener('click', function (event) {
         const clickedItem = event.target.closest('.sentiment-actions-interactive .sentiment-item');
         if (!clickedItem) return;
         event.stopPropagation();
-        
+
         const container = clickedItem.closest('.sentiment-actions-interactive');
         if (!container) return;
 
@@ -352,7 +351,7 @@ function setupInteractiveSentimentControls() {
             item.classList.remove('selected');
         });
         clickedItem.classList.add('selected');
-        
+
         console.log('選択されたセンチメント:', clickedItem.title);
     });
 }

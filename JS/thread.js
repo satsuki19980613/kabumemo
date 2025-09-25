@@ -21,28 +21,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-/**
- * ★★★ 新しく追加した関数 ★★★
- * 機能：factor-card.htmlからファクターカードを読み込み、リストに表示する
- */
-async function loadFactorCards() {
+// thread.js 内の loadFactorCards 関数を置き換え
+function loadFactorCards() { // async は不要に
     try {
-        const response = await fetch('../HTML/factor-card.html');
-        if (!response.ok) throw new Error('factor-card.htmlの読み込みに失敗しました。');
-        const templateText = await response.text();
+        // HTMLからテンプレートを取得
+        const template = document.getElementById('factor-card-template');
+        if (!template) throw new Error('factor-card-template が見つかりません。');
 
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = templateText;
-
-        const factorCards = tempDiv.querySelectorAll('.factor-card');
+        const factorCards = template.content.querySelectorAll('.factor-card');
         const listContainer = document.querySelector('.factor-list');
         if (!listContainer) return;
 
         listContainer.innerHTML = ''; // コンテナを一度空にする
         factorCards.forEach(card => {
-            listContainer.appendChild(card);
+            const clonedCard = card.cloneNode(true);
+            listContainer.appendChild(clonedCard);
             // 動的に追加したカード内のセンチメントアイコンにもクリックイベントを設定
-            setupSentimentInteractions(card);
+            if (typeof setupSentimentInteractions === 'function') {
+                setupSentimentInteractions(clonedCard);
+            }
         });
     } catch (error) {
         console.error("ファクターの読み込みに失敗:", error);
